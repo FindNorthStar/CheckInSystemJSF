@@ -1,4 +1,4 @@
-package edu.bupt.checkinsystem;
+package edu.bupt.checkinsystem.beans;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;

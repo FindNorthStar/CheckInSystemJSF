@@ -1,4 +1,4 @@
-package edu.bupt.checkinsystem;
+package edu.bupt.checkinsystem.beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
