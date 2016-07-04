@@ -3,11 +3,19 @@
 
     <persistence-unit name="NewPersistenceUnit">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>edu.bupt.checkinsystem.entities.AppealEntity</class>
+        <class>edu.bupt.checkinsystem.entities.ClazzEntity</class>
+        <class>edu.bupt.checkinsystem.entities.CourseEntity</class>
+        <class>edu.bupt.checkinsystem.entities.CourseClassEntity</class>
+        <class>edu.bupt.checkinsystem.entities.EventEntity</class>
+        <class>edu.bupt.checkinsystem.entities.RecordEntity</class>
+        <class>edu.bupt.checkinsystem.entities.StudentEntity</class>
+        <class>edu.bupt.checkinsystem.entities.TypeEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://10.125.103.123:3306/sunyi"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.username" value="sunyi"/>
-            <property name="hibernate.connection.password" value="sunyi"/>
+            <property name="hibernate.connection.username"/>
+            <property name="hibernate.connection.password"/>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
