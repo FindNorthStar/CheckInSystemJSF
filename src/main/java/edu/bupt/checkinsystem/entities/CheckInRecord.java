@@ -35,6 +35,9 @@ public class CheckInRecord {
         this.checkInEvent = checkInEvent;
     }
 
+    public CheckInRecord() {
+    }
+
     public long getId() {
         return id;
     }

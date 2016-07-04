@@ -22,6 +22,9 @@ public class Type {
         this.typeName = typeName;
     }
 
+    public Type() {
+    }
+
     public int getTypeNo() {
         return typeNo;
     }

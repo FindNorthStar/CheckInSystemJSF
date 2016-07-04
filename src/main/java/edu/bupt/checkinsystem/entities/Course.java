@@ -28,6 +28,9 @@ public class Course {
         this.classes = classes;
     }
 
+    public Course() {
+    }
+
     public long getId() {
         return id;
     }

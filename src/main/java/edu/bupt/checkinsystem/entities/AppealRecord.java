@@ -34,6 +34,9 @@ public class AppealRecord {
         this.checkInEvent = checkInEvent;
     }
 
+    public AppealRecord() {
+    }
+
     public long getId() {
         return id;
     }

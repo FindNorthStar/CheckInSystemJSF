@@ -22,6 +22,9 @@ public class Class {
         this.className = className;
     }
 
+    public Class() {
+    }
+
     public long getId() {
         return id;
     }

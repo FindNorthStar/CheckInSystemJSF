@@ -31,6 +31,9 @@ public class CheckInEvent {
         this.checkInType = checkInType;
     }
 
+    public CheckInEvent() {
+    }
+
     public long getId() {
         return id;
     }

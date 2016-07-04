@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @Entity
 public class Student implements Serializable{
 
+    @Id
     private long id;
     private String studentNo;
     private String name;
@@ -28,6 +30,9 @@ public class Student implements Serializable{
         this.studentNo = studentNo;
         this.name = name;
         this.aClass = aClass;
+    }
+
+    public Student() {
     }
 
     public long getId() {
