@@ -3,15 +3,31 @@
                xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
                       http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
     <url-mapping id="register">
-        <pattern value="/register" />
-        <view-id value="/faces/register.xhtml" />
+        <pattern value="/register"/>
+        <view-id value="/faces/register.xhtml"/>
     </url-mapping>
     <url-mapping id="checkin">
-        <pattern value="/checkin" />
-        <view-id value="/faces/checkin.xhtml" />
+        <pattern value="/checkin"/>
+        <view-id value="/faces/checkin.xhtml"/>
     </url-mapping>
     <url-mapping id="backend-index">
         <pattern value="/backend/index"/>
         <view-id value="/faces/backend/index.xhtml"/>
+    </url-mapping>
+    <url-mapping id="backend-search">
+        <pattern value="/backend/search"/>
+        <view-id value="/faces/backend/search.xhtml"/>
+    </url-mapping>
+    <url-mapping id="backend-courses">
+        <pattern value="/backend/courses"/>
+        <view-id value="/faces/backend/courses.xhtml"/>
+    </url-mapping>
+    <url-mapping id="backend-history">
+        <pattern value="/backend/history"/>
+        <view-id value="/faces/backend/history.xhtml"/>
+    </url-mapping>
+    <url-mapping id="backend-classes">
+        <pattern value="/backend/classes"/>
+        <view-id value="/faces/backend/classes.xhtml"/>
     </url-mapping>
 </pretty-config>
