@@ -13,7 +13,12 @@ import java.util.*;
  * @since 16/7/5 11:13
  */
 public class SqlUtils {
-
+    /**
+     * 执行 SQL 类 SELECT 型查询
+     * @param query SQL 语句
+     * @return 数据列
+     * @throws Exception
+     */
     public static List<Map<String, Object>> executeSqlQuery(String query) throws Exception {
         Connection connection = Config.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -24,6 +29,50 @@ public class SqlUtils {
 
         connection.close();
         return rows;
+    }
+
+    /**
+     * 执行单行插入/更新
+     * @param query SQL 语句
+     * @param row 存数据的行
+     * @return 状态, 见 https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#SUCCESS_NO_INFO
+     * @throws Exception
+     */
+    public static int executeSqlQuery(String query, Map<Integer, Object> row) throws Exception {
+        Connection connection = Config.getConnection();
+        connection.setAutoCommit(false);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (Map.Entry<Integer, Object> column : row.entrySet()) {
+            preparedStatement.setObject(column.getKey(), column.getValue());
+        }
+        preparedStatement.addBatch();
+        int[] batch = preparedStatement.executeBatch();
+
+        connection.close();
+        return batch[0];
+    }
+
+    /**
+     * 执行多行插入/更新
+     * @param query SQL 语句
+     * @param rows 存数据的行
+     * @return 状态, 与 List 顺序相同。见 https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#SUCCESS_NO_INFO
+     * @throws Exception
+     */
+    public static int[] executeSqlQuery(String query, List<Map<Integer, Object>> rows) throws Exception {
+        Connection connection = Config.getConnection();
+        connection.setAutoCommit(false);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (Map<Integer, Object> row : rows) {
+            for (Map.Entry<Integer, Object> column : row.entrySet()) {
+                preparedStatement.setObject(column.getKey(), column.getValue());
+            }
+            preparedStatement.addBatch();
+        }
+        int[] batchResult = preparedStatement.executeBatch();
+
+        connection.close();
+        return batchResult;
     }
 
     private static void getHashMap(List<Map<String, Object>> row, ResultSet rs_SubItemType) throws SQLException {
