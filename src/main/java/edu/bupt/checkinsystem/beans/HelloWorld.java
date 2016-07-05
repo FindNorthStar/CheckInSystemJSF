@@ -1,5 +1,6 @@
 package edu.bupt.checkinsystem.beans;
 
+import edu.bupt.checkinsystem.Config;
 import edu.bupt.checkinsystem.entities.TypeEntity;
 
 import javax.faces.bean.ManagedBean;
@@ -13,16 +14,9 @@ public class HelloWorld implements Serializable{
 
     private static final long serialVersionUID = -6913972022251814607L;
 
-    private String s1 = "Hello World!!";
-
-    private Connection newConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://10.125.103.123:3306/sunyi", "sunyi", "sunyi");
-    }
-
     public String getS1() throws Exception {
         try {
-            Connection conn = this.newConnection();
+            Connection conn = Config.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM type");
             ResultSet result = ps.executeQuery();
             StringBuilder sb = new StringBuilder();
@@ -38,9 +32,4 @@ public class HelloWorld implements Serializable{
             throw e;
         }
     }
-
-    public void setS1(String s1) {
-        this.s1 = s1;
-    }
-
 }
