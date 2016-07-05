@@ -10,4 +10,8 @@
         <pattern value="/checkin" />
         <view-id value="/faces/checkin.xhtml" />
     </url-mapping>
+    <url-mapping>
+        <pattern value="/backend"/>
+        <view-id value="/faces/backend.xhtml"/>
+    </url-mapping>
 </pretty-config>
