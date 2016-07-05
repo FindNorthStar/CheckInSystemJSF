@@ -6,7 +6,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
+    <!-- BootStrap Core CSS-->
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
 
+    <!-- Hack for IE 10 -->
+    <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css" />
+
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    </style>
 </h:head>
 
 <h:body>
@@ -43,7 +57,9 @@
 
     </div><!-- /.container -->
 
-
+    <!-- Script here -->
+    <h:outputScript library="js" name="speed-up.js"/>
+    <h:outputScript library="js" name="bootstrap.min.js" />
+    <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
 </h:body>
-
 </html>
