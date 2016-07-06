@@ -125,7 +125,8 @@
                         </div>
                     </form>
 
-                    <button onclick="disable()" class="btn btn-primary start-btn" type="submit">开始</button>
+                    <button onclick="change_form_state()" id="submit_btn" class="btn btn-primary start-btn" type="submit">开始
+                    </button>
                 </div>
             </div>
         </center>
@@ -139,10 +140,20 @@
 
     <script>
 
-        function disable() {
-            $("select").prop("disabled", true);
-            $("label").addClass("disabled");
-            $("button").prop("disabled", true);
+        function change_form_state() {
+            var submit_btn = $("#submit_btn");
+
+            if (submit_btn.text().trim() == "开始") {
+                $("select").prop("disabled", true);
+                $("label").addClass("disabled");
+                submit_btn.text("结束");
+            }
+            else {
+                $("select").prop("disabled", false);
+                $("label").removeClass("disabled");
+
+                submit_btn.text("开始");
+            }
         }
 
     </script>
