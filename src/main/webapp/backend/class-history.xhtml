@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <!-- BootStrap Core CSS-->
+    <h:outputStylesheet library="css" name="bootstrap.css" />
+
+    <!-- Bootstrap Date Picker-->
+    <h:outputStylesheet library="css" name="bootstrap-datepicker3.css" />
+
+    <!-- Bootstrap Sortable Table-->
+    <h:outputStylesheet library="css" name="bootstrap-sortable.css" />
+
+    <!-- Hack for IE 10 -->
+    <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css" />
+
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/backend/index">签到后台</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/backend/index">主页</a></li>
+                    <li><a href="/backend/search">查询</a></li>
+                    <li><a href="/backend/courses">课程</a></li>
+                    <li><a href="/backend/classes">班级</a></li>
+                    <li class="active"><a href="/backend/class-history">历史</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>操作系统(1,2,3班) 签到历史</h1>
+        </div>
+        <div style="padding-bottom: 20px;">
+            <form class="form-inline">
+                <span>时间: </span>
+                <div class="input-daterange input-group" id="datepicker" style="width: 400px">
+                    <input type="text" class="input-sm form-control" name="start" />
+                    <span class="input-group-addon">至</span>
+                    <input type="text" class="input-sm form-control" name="end" />
+                </div>
+                <div class="input-group">
+                    <select class="form-control" id="view-by">
+                        <option value="by-person">按人查看</option>
+                        <option value="by-event">按事件查看</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div id="by-person">
+            <table class="table table-striped sortable">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>签到次数</th>
+                    <th>缺到次数</th>
+                    <th>总次数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>小明哲</td>
+                    <td>1234567890</td>
+                    <td>18</td>
+                    <td>2</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>中明哲</td>
+                    <td>1234567890</td>
+                    <td>15</td>
+                    <td>5</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>微明哲</td>
+                    <td>1234567890</td>
+                    <td>17</td>
+                    <td>3</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>老明哲</td>
+                    <td>1234567890</td>
+                    <td>17</td>
+                    <td>3</td>
+                    <td>20</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="by-event" style="display: none;">
+            <table class="table table-striped sortable">
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>类型</th>
+                    <th>签到人数</th>
+                    <th>缺到人数</th>
+                    <th>总人数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2016-02-01 00:00</td>
+                    <td>下课</td>
+                    <td>118</td>
+                    <td>7</td>
+                    <td>125</td>
+                </tr>
+                <tr>
+                    <td>2016-01-31 23:00</td>
+                    <td>上课</td>
+                    <td>110</td>
+                    <td>15</td>
+                    <td>125</td>
+                </tr>
+                <tr>
+                    <td>2016-01-03 15:00</td>
+                    <td>下课</td>
+                    <td>85</td>
+                    <td>40</td>
+                    <td>125</td>
+                </tr>
+                <tr>
+                    <td>2016-01-03 14:00</td>
+                    <td>上课</td>
+                    <td>75</td>
+                    <td>50</td>
+                    <td>125</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div><!-- /.container -->
+
+    <!-- Script here -->
+    <h:outputScript library="js" name="speed-up.js"/>
+    <h:outputScript library="js" name="bootstrap.js" />
+    <h:outputScript library="js" name="bootstrap-datepicker.js" />
+    <h:outputScript library="js" name="bootstrap-sortable.js" />
+    <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
+    <h:outputScript>
+        $('.input-daterange').datepicker({
+            maxViewMode: 2,
+            todayBtn: "linked",
+            format: "yyyy-mm-dd",
+            todayHighlight: true
+        });
+        $("#view-by").change(function() {
+            var by_what = $("#view-by").val()
+            if (by_what === "by-person") {
+                $("#by-event").hide();
+                $("#by-person").show();
+            }
+            if (by_what === "by-event") {
+                $("#by-person").hide();
+                $("#by-event").show();
+            }
+        });
+    </h:outputScript>
+</h:body>
+</html>
