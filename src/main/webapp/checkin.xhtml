@@ -17,26 +17,14 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 <th>时间</th>
 <th>课程</th>
 </tr>
-<tr>
-<td>01-01 00:00</td>
-<td>计算机组织与结构 上课</td>
-</tr>
-<tr>
-<td>01-01 00:00</td>
-<td>Java 上课</td>
-</tr>
-<tr>
-<td>01-01 00:00</td>
-<td>C++ 上课</td>
-</tr>
-<tr>
-<td>01-01 00:00</td>
-<td>操作系统 上课</td>
-</tr>
-<tr>
-<td>01-01 00:00</td>
-<td>数据库 上课</td>
-</tr>
+    <ui:repeat var="record" value="#{checkin.records}">
+
+        <tr>
+            <td>#{record.get("checkDateTime")}</td>
+            <td>#{record.get("courseName")} #{record.get("typeName")}</td>
+        </tr>
+
+    </ui:repeat>
 </table>
 </center>
 </h:body>
