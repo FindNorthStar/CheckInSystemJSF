@@ -1,13 +1,10 @@
 package edu.bupt.checkinsystem.beans;
 
-import edu.bupt.checkinsystem.Config;
-import edu.bupt.checkinsystem.entities.TypeEntity;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
-import java.sql.*;
 import java.util.List;
 import java.util.Map;
 
