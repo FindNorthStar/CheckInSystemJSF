@@ -6,37 +6,37 @@ import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @ManagedBean(name = "checkin")
-@SessionScoped // TODO:
+@RequestScoped // TODO:
 public class CheckIn implements Serializable {
 
     private List<Map<String, Object>> records = null;
-    private String studentId = null;
+    private Integer studentId = null;
 
     @PostConstruct
     private void init() {
         try {
+            if (IpUtils.getMacAddress() == null) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
+            }
+
             if (!isRegistered(getStudentId())) {
                 // Student not registered.
                 FacesContext.getCurrentInstance().getExternalContext().redirect("register");
-            }
-            else {
+            } else {
                 // Student already registered.
 
                 if (isCheckedIn()) {
                     // Student already checked in.
 
-                }
-                else {
+                } else {
                     // Student not checked in.
                     checkIn();
                 }
@@ -47,12 +47,12 @@ public class CheckIn implements Serializable {
     }
 
 
-    private boolean isRegistered(String studentId) throws Exception {
+    private boolean isRegistered(Integer studentId) throws Exception {
         return studentId != null;
     }
 
 
-    private String getStudentId() throws Exception {
+    private Integer getStudentId() throws Exception {
         if (studentId == null) {
             Map<Integer, Object> map = new HashMap<Integer, Object>();
             map.put(1, IpUtils.getMacAddress());
@@ -60,8 +60,8 @@ public class CheckIn implements Serializable {
             List<Map<String, Object>> resultList = SqlUtils.executeSqlQuery(
                     "SELECT id FROM student WHERE macAddress = ?", map);
 
-            if (resultList != null) {
-                studentId = String.valueOf(resultList.get(0).get("id"));
+            if (!resultList.isEmpty()) {
+                studentId = (Integer) resultList.get(0).get("id");
             }
         }
         return studentId;

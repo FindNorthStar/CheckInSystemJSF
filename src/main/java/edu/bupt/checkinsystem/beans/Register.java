@@ -5,6 +5,7 @@ import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 
 @ManagedBean(name = "register")
-@SessionScoped // TODO:
+@RequestScoped // TODO:
 public class Register implements Serializable {
 
     private String studentNo;
@@ -23,6 +24,10 @@ public class Register implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            if (IpUtils.getMacAddress() == null) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
+            }
+
             if (isRegistered(IpUtils.getMacAddress())) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
             }
@@ -63,5 +68,6 @@ public class Register implements Serializable {
         map.put(2, getStudentNo());
 
         SqlUtils.executeSqlUpdate("UPDATE student SET macAddress = ? WHERE studentNo = ?", map);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
     }
 }
