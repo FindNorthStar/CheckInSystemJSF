@@ -71,7 +71,7 @@ public class SqlUtils {
         }
         preparedStatement.addBatch();
         int[] batch = preparedStatement.executeBatch();
-
+        connection.commit();
         preparedStatement.close();
         connection.close();
         return batch[0];
@@ -95,7 +95,7 @@ public class SqlUtils {
             preparedStatement.addBatch();
         }
         int[] batchResult = preparedStatement.executeBatch();
-
+        connection.commit();
         preparedStatement.close();
         connection.close();
         return batchResult;
