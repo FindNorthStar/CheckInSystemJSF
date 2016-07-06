@@ -34,4 +34,8 @@
         <pattern value="/backend/class-history"/>
         <view-id value="/faces/backend/class-history.xhtml"/>
     </url-mapping>
+    <url-mapping id="backend-student-history">
+        <pattern value="/backend/student-history"/>
+        <view-id value="/faces/backend/student-history.xhtml"/>
+    </url-mapping>
 </pretty-config>
