@@ -1,12 +1,11 @@
 package edu.bupt.checkinsystem.beans;
 
-import edu.bupt.checkinsystem.util.IpUtils;
+import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -24,11 +23,11 @@ public class Register implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            if (IpUtils.getMacAddress() == null) {
+            if (NetUtils.getMacAddress() == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
             }
 
-            if (isRegistered(IpUtils.getMacAddress())) {
+            if (isRegistered(NetUtils.getMacAddress())) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
             }
         } catch (Exception e) {
@@ -64,7 +63,7 @@ public class Register implements Serializable {
         // UPDATE student to map macAddress
 
         Map<Integer, Object> map = new HashMap<Integer, Object>();
-        map.put(1, IpUtils.getMacAddress());
+        map.put(1, NetUtils.getMacAddress());
         map.put(2, getStudentNo());
 
         SqlUtils.executeSqlUpdate("UPDATE student SET macAddress = ? WHERE studentNo = ?", map);

@@ -1,7 +1,7 @@
 package edu.bupt.checkinsystem.beans;
 
 import edu.bupt.checkinsystem.Globals;
-import edu.bupt.checkinsystem.util.IpUtils;
+import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +23,7 @@ public class CheckIn implements Serializable {
     @PostConstruct
     private void init() {
         try {
-            if (IpUtils.getMacAddress() == null) {
+            if (NetUtils.getMacAddress() == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
             }
 
@@ -55,7 +55,7 @@ public class CheckIn implements Serializable {
     private Integer getStudentId() throws Exception {
         if (studentId == null) {
             Map<Integer, Object> map = new HashMap<Integer, Object>();
-            map.put(1, IpUtils.getMacAddress());
+            map.put(1, NetUtils.getMacAddress());
 
             List<Map<String, Object>> resultList = SqlUtils.executeSqlQuery(
                     "SELECT id FROM student WHERE macAddress = ?", map);
