@@ -1,9 +1,12 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.omnifaces.util.Faces;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -17,12 +20,26 @@ import java.util.Map;
 @RequestScoped
 public class StudentManagement implements Serializable {
 
-    public Integer classId = 1;
+    private Integer classId = 0;
     private String classNo = null;
     private Integer studentCount = 0;
     private List<Map<String, Object>> courseList = null;
     private List<Map<String, Object>> studentList = null;
 
+    @PostConstruct
+    private void init() {
+        try {
+            classId = Integer.valueOf(Faces.getRequestParameter("classId"));
+            classNo = getClassNo();
+        } catch (Exception e) {
+            try {
+                Faces.redirect("/backend/index");
+            } catch (Exception f) {
+                //Fuck you!
+            }
+
+        }
+    }
 
     public String getClassNo() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
@@ -49,8 +66,8 @@ public class StudentManagement implements Serializable {
         map.put(1, classId);
         courseList = SqlUtils.executeSqlQuery("SELECT course.id AS courseId, course.courseName AS courseName \n" +
                 "FROM course, courseClass\n" +
-                "WHERE course.id = courseClass.courseId AND courseClass.classId = 1\n" +
-                "ORDER BY course.id");
+                "WHERE course.id = courseClass.courseId AND courseClass.classId = ?\n" +
+                "ORDER BY course.id", map);
         return courseList;
     }
 

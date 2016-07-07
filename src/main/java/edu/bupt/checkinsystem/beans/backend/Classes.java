@@ -16,9 +16,11 @@ import java.util.Map;
 @ManagedBean(name = "classes")
 @RequestScoped
 public class Classes implements Serializable {
+
     private List<Map<String, Object>> classes = null;
+
     public List<Map<String, Object>> getClasses() throws Exception {
-        classes = SqlUtils.executeSqlQuery("SELECT classNo FROM class");
+        classes = SqlUtils.executeSqlQuery("SELECT id, classNo FROM class");
         return classes;
     }
 }
