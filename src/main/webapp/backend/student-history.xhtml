@@ -62,14 +62,6 @@
                     <span class="input-group-addon">to</span>
                     <input type="text" class="input-sm form-control" name="end" />
                 </div>
-                <script type="text/javascript">
-                    $('.input-daterange').datepicker({
-                        maxViewMode: 2,
-                        todayBtn: "linked",
-                        format: "yyyy-mm-dd",
-                        todayHighlight: true
-                    });
-                </script>
             </div>
             <span>课程</span>
             <select class="form-control" name="course">
@@ -95,35 +87,30 @@
                 <td>操作系统</td>
                 <td>下课</td>
                 <td>未签到</td>
-                <td></td>
+                <td><a href="#">补签</a> <a href="#">申诉</a></td>
             </tr>
             <tr>
                 <td>01-01 00:00</td>
                 <td>操作系统</td>
                 <td>上课</td>
                 <td>已签到</td>
-                <td></td>
+                <td><a href="#">补签</a> <a href="#">申诉</a></td>
             </tr>
             <tr>
                 <td>01-01 00:00</td>
                 <td>毛gay</td>
                 <td>下课</td>
                 <td>已签到</td>
-                <td></td>
+                <td><a href="#">补签</a> <a href="#">申诉</a></td>
             </tr>
             <tr>
                 <td>01-01 00:00</td>
                 <td>毛gay</td>
-                <td>上
-                    课</td>
+                <td>上课</td>
                 <td>未签到</td>
-                <td></td>
+                <td><a href="#">补签</a> <a href="#">申诉</a></td>
             </tr>
         </table>
-        <script type="text/javascript">
-            $('td:contains("未签到")').addClass("danger");
-            $('td:contains("已签到")').addClass("success");
-        </script>
     </div>
     </div>
     <!-- Script here -->
@@ -132,8 +119,15 @@
     <h:outputScript library="js" name="bootstrap-datepicker.js" />
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
     <h:outputScript>
+        $('.input-daterange').datepicker({
+            maxViewMode: 2,
+            todayBtn: "linked",
+            format: "yyyy-mm-dd",
+            todayHighlight: true
+        });
         $('td:contains("未签到")').addClass("danger");
         $('td:contains("已签到")').addClass("success");
+        $('tr:contains("已签到") a').hide();
     </h:outputScript>
 </h:body>
 </html>
