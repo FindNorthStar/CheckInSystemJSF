@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <meta charset="utf-8"/>
@@ -73,7 +73,7 @@
                     <li><a href="/backend/history">历史</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>当前用户: <span id="teacherName" /></a></li>
+                    <li><a>当前用户: <span id="teacherName"/></a></li>
                     <li><a href="/backend/logout">退出登录</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -93,11 +93,9 @@
                             <label class="col-sm-3 control-label">课程</label>
                             <div class="col-sm-9">
                                 <select class="form-control">
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
+                                    <ui:repeat var="course" value="#{backend_index.courseList}">
+                                        <option>#{course}</option>
+                                    </ui:repeat>
                                 </select>
                             </div>
                         </div>
@@ -116,20 +114,20 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">签到类型</label>
                             <div class="col-sm-9 left">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default active">
-                                        <input type="radio" name="options" id="option1" autocomplete="off"
-                                               checked="checked"/> 上课
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="radio" name="options" id="option2" autocomplete="off"/> 下课
-                                    </label>
+                                <div id="type_group" class="btn-group" data-toggle="buttons">
+                                    <ui:repeat value="#{backend_index.typeList}" var="typeName">
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="options" id="option2"
+                                                   autocomplete="off"/> #{typeName}
+                                        </label>
+                                    </ui:repeat>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <button onclick="change_form_state()" id="submit_btn" class="btn btn-primary start-btn" type="submit">开始
+                    <button onclick="change_form_state()" id="submit_btn" class="btn btn-primary start-btn"
+                            type="submit">开始
                     </button>
                 </div>
             </div>
@@ -141,9 +139,16 @@
     <h:outputScript library="js" name="speed-up.js"/>
     <h:outputScript library="js" name="bootstrap.js"/>
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
-    <h:outputScript library="js" name="jquery-cookie.js" />
-    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript library="js" name="jquery-cookie.js"/>
+    <h:outputScript library="js" name="authenication.js"/>
     <script>
+
+        $(document).ready(check_first);
+
+        function check_first() {
+            $("#type_group label:first-child").addClass("active");
+            $("#type_group :first-child :first-child").attr("checked", "checked")
+        }
 
         function change_form_state() {
             var submit_btn = $("#submit_btn");

@@ -12,7 +12,7 @@ import java.util.Map;
 @RequestScoped
 public class Courses implements Serializable {
     private List<Map<String, Object>> records = null;
-    private static final String listAllCoursesSql =
+    private static final String LIST_ALL_COURSES_SQL =
             "SELECT course.id, " +
                     "course.courseName, " +
                     "GROUP_CONCAT(class.classNo SEPARATOR ', ') AS classNumbers, " +
@@ -28,7 +28,7 @@ public class Courses implements Serializable {
 
     public List<Map<String, Object>> getRecords() throws Exception {
         if (records == null) {
-            records = SqlUtils.executeSqlQuery(listAllCoursesSql);
+            records = SqlUtils.executeSqlQuery(LIST_ALL_COURSES_SQL);
         }
         return records;
     }
