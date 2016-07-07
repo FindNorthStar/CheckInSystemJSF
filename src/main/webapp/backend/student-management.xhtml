@@ -80,12 +80,12 @@
     <div class="container">
 
         <div class="top">
-            <h2>#{backend_student_admin.classNo} 学生管理</h2>
+            <h2>#{backend_student_management.classNo} 学生管理</h2>
 
             <div class="brife-margin">
                 <p class="class-birfe">
-                    本班共<span class="student-count">#{backend_student_admin.studentCount}</span>人。<span class="course">课程:
-                    <ui:repeat var="course" value="#{backend_student_admin.courseList}" >
+                    本班共<span class="student-count">#{backend_student_management.studentCount}</span>人。<span class="course">课程:
+                    <ui:repeat var="course" value="#{backend_student_management.courseList}" >
                     <span class="course">
                         <a href="#">#{course.get('courseName')}</a>
                     </span>
@@ -114,7 +114,7 @@
                 </thead>
 
                 <tbody>
-                <ui:repeat var="student" value="#{backend_student_admin.studentList}" >
+                <ui:repeat var="student" value="#{backend_student_management.studentList}" >
                 <tr>
                     <td>#{student.get("studentNo")}</td>
                     <td>#{student.get("studentName")}</td>

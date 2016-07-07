@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * Created by wangym5106 on 16-7-7.
  */
-@ManagedBean(name = "backend_student_admin")
+@ManagedBean(name = "backend_student_management")
 @RequestScoped
-public class StudentAdmin implements Serializable {
+public class StudentManagement implements Serializable {
 
     public Integer classId = 1;
     private String classNo = null;
