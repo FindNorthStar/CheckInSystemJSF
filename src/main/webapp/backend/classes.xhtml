@@ -23,29 +23,13 @@
             padding-top: 50px;
         }
 
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-
         .container-head {
             padding: 20px 15px;
             text-align: left;
         }
 
-        .table-head-text {
-            display: inline-block;
-            padding: 6px 12px;
-            margin-bottom: 0;
-            font-size: 14px;
-            font-weight: normal;
-            line-height: 1.42857143;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            background-image: none;
-            border: 1px solid transparent;
-            border-radius: 4px;
+        .operation {
+            padding-right: 0.6em;
         }
     </style>
 </h:head>
@@ -72,7 +56,7 @@
                     <li><a href="/backend/history">历史</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>当前用户: <span id="teacherName" /></a></li>
+                    <li><a>当前用户: <span id="teacherName"/></a></li>
                     <li><a href="/backend/logout">退出登录</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -82,34 +66,47 @@
     <div class="container">
 
         <div class="container-head">
-            <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-default" onclick="addElement">增加</button>
-                <button type="button" class="btn btn-default">导入Excel</button>
-            </div>
+            <h:form styleClass="form-horizontal">
+                <div class="btn-group" role="group" aria-label="...">
+                    <h:commandButton styleClass="btn btn-default" value="增加"/>
+                    <h:commandButton styleClass="btn btn-default" value="导入 Excel"/>
+                </div>
+            </h:form>
         </div>
     </div>
     <div class="container">
         <div class="container-head">
             <div class="table-responsive">
                 <table class="table table-hover" id="classTable">
+                    <thead>
+
                     <tr>
                         <th>班号</th>
-                        <th></th>
-                        <th></th>
+                        <th>操作</th>
                     </tr>
-                    <ui:repeat var="class" value="#{classes.classes}" >
-                    <tr>
-                        <td scope="row">
-                            <p>#{class.get("classNo")}</p>
-                        </td>
-                        <td>
-                            <a href="#">学生管理</a>
-                        </td>
-                        <td>
-                            <a href="#">删除</a>
-                        </td>
-                    </tr>
-                </ui:repeat>
+
+                    </thead>
+
+                    <tbody>
+
+                    <ui:repeat var="class" value="#{classes.classes}">
+                        <tr>
+                            <td scope="row">
+                                <p>#{class.get("classNo")}</p>
+                            </td>
+                            <td>
+                                <span class="operation">
+                                    <a href="#">学生管理</a>
+                                </span>
+
+                                <span class="operation">
+                                <a href="#">删除</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -121,7 +118,7 @@
     <h:outputScript library="js" name="speed-up.js"/>
     <h:outputScript library="js" name="bootstrap.js"/>
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
-    <h:outputScript library="js" name="jquery-cookie.js" />
-    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript library="js" name="jquery-cookie.js"/>
+    <h:outputScript library="js" name="authenication.js"/>
 </h:body>
 </html>
