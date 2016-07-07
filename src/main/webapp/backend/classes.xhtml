@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <h:head>
@@ -91,50 +92,24 @@
         <div class="container-head">
             <div class="table-responsive">
                 <table class="table table-hover" id="classTable">
-                    <thead>
                     <tr>
                         <th>班号</th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
-                    </thead>
-                    <tbody>
+                    <ui:repeat var="class" value="#{classes.classes}" >
                     <tr>
-                        <th scope="row">
-                            <div class="table-head-text">2014211501</div>
-                        </th>
-                        <td>
-                            <button type="button" class="btn btn-default">学生管理</button>
+                        <td scope="row">
+                            <p>#{class.get("classNo")}</p>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default">删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="table-head-text">2014211502</div>
-                        </th>
-
-                        <td>
-                            <button type="button" class="btn btn-default">学生管理</button>
+                            <a href="#">学生管理</a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default">删除</button>
+                            <a href="#">删除</a>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="table-head-text">2014211503</div>
-                        </th>
-                        <td>
-                            <button type="button" class="btn btn-default">学生管理</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-default">删除</button>
-                        </td>
-                    </tr>
-                    </tbody>
+                </ui:repeat>
                 </table>
             </div>
         </div>
