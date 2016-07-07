@@ -141,7 +141,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
-    <h:outputScript>
+    <script>
         $(document).ready(check_first);
 
         function check_first() {
@@ -164,6 +164,23 @@
                 submit_btn.text("开始");
             }
         }
+    </script>
+
+    <h:outputScript>
+        $(document).ready(change_class);
+        function change_class() {
+        var course = $("#course_select").find(":selected").text()
+
+        function get_classes_by_course() {
+        var json = #{backend_index.courseClassJsonObject};
+        return json[course];
+        }
+
+        var classes = get_classes_by_course();
+
+        $("#classes_names").text(classes);
+        }
+        $("#course_select").on('change', change_class)
     </h:outputScript>
 </h:body>
 </html>

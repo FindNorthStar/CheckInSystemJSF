@@ -3,7 +3,6 @@ package edu.bupt.checkinsystem.beans.backend;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +42,7 @@ public class Index implements Serializable {
     private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT name FROM type";
 
     private List<Map<String, Object>> resultList = null;
-    private List<Map<String, String>> courseClassList = null;
+    private Map<String, String> courseClasses = null;
     private List<String> typeList = null;
     private String coureseClassJsonArray = null;
 
@@ -51,7 +50,7 @@ public class Index implements Serializable {
     private void init() {
         try {
             resultList = SqlUtils.executeSqlQuery(LIST_ALL_COURSES_SQL);
-            getCourseClassList();
+            getCourseClasses();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,26 +71,23 @@ public class Index implements Serializable {
         return courseList;
     }
 
-    public List<Map<String, String>> getCourseClassList() {
-        if (courseClassList == null) {
+    public Map<String, String> getCourseClasses() {
+        if (courseClasses == null) {
 
-            courseClassList = new ArrayList<Map<String, String>>();
+            courseClasses = new HashMap<String, String>();
 
             for (Map<String, Object> column
                     : resultList) {
 
-                Map<String, String> map = new HashMap<String, String>();
-
-                map.put(
+                courseClasses.put(
                         String.valueOf(column.get("courseName")),
                         String.valueOf(column.get("classNumbers"))
                 );
 
-                courseClassList.add(map);
             }
         }
 
-        return courseClassList;
+        return courseClasses;
     }
 
 
@@ -111,11 +107,11 @@ public class Index implements Serializable {
     }
 
 
-    public String getCourseClassJsonArray() {
+    public String getCourseClassJsonObject() {
         if (coureseClassJsonArray == null) {
-            getCourseClassList();
+            getCourseClasses();
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-            coureseClassJsonArray = gson.toJson(courseClassList, new TypeToken<List<Map<String, String>>>(){}.getType());
+            coureseClassJsonArray = gson.toJson(courseClasses);
         }
 
         return coureseClassJsonArray;
