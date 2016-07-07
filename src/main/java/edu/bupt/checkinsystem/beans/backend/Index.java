@@ -1,5 +1,9 @@
 package edu.bupt.checkinsystem.beans.backend;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,14 +43,15 @@ public class Index implements Serializable {
     private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT name FROM type";
 
     private List<Map<String, Object>> resultList = null;
-    private Map<String, String> courseClass = null;
+    private List<Map<String, String>> courseClassList = null;
     private List<String> typeList = null;
+    private String coureseClassJsonArray = null;
 
     @PostConstruct
     private void init() {
         try {
             resultList = SqlUtils.executeSqlQuery(LIST_ALL_COURSES_SQL);
-            getCourseClass();
+            getCourseClassList();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,21 +72,26 @@ public class Index implements Serializable {
         return courseList;
     }
 
-    public void setCourseList(List<String> courseList) {
-        this.courseList = courseList;
-    }
+    public List<Map<String, String>> getCourseClassList() {
+        if (courseClassList == null) {
 
-    public Map<String, String> getCourseClass() {
-        if (courseClass == null) {
+            courseClassList = new ArrayList<Map<String, String>>();
+
             for (Map<String, Object> column
                     : resultList) {
-                courseClass.put(
+
+                Map<String, String> map = new HashMap<String, String>();
+
+                map.put(
                         String.valueOf(column.get("courseName")),
                         String.valueOf(column.get("classNumbers"))
                 );
+
+                courseClassList.add(map);
             }
         }
-        return courseClass;
+
+        return courseClassList;
     }
 
 
@@ -97,5 +108,16 @@ public class Index implements Serializable {
         }
 
         return typeList;
+    }
+
+
+    public String getCourseClassJsonArray() {
+        if (coureseClassJsonArray == null) {
+            getCourseClassList();
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+            coureseClassJsonArray = gson.toJson(courseClassList, new TypeToken<List<Map<String, String>>>(){}.getType());
+        }
+
+        return coureseClassJsonArray;
     }
 }

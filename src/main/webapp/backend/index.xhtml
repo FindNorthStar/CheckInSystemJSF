@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">课程</label>
                             <div class="col-sm-9">
-                                <select class="form-control">
+                                <select id="course_select" class="form-control">
                                     <ui:repeat var="course" value="#{backend_index.courseList}">
                                         <option>#{course}</option>
                                     </ui:repeat>
@@ -105,7 +105,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">班级</label>
                             <div class="col-sm-9 left">
-                                <p class="form-control-static">这里是班级名单</p>
+                                <p id="classes_names" class="form-control-static">这里是班级名单</p>
                             </div>
                         </div>
                     </form>
@@ -141,8 +141,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
-    <script>
-
+    <h:outputScript>
         $(document).ready(check_first);
 
         function check_first() {
@@ -165,7 +164,6 @@
                 submit_btn.text("开始");
             }
         }
-
-    </script>
+    </h:outputScript>
 </h:body>
 </html>
