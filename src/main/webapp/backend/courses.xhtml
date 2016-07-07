@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
     <meta charset="utf-8"/>
@@ -77,91 +78,31 @@
                         </th>
                         <th>名称</th>
                         <th>班级</th>
+                        <th>授课教师</th>
                         <th>操作</th>
                     </tr>
                     </thead>
 
                     <tbody>
+                    <ui:repeat var="record" value="#{backend_courses.records}">
                     <tr>
-                        <th scope="row">1</th>
-                        <td>操作系统</td>
-                        <td>2014211501</td>
+                        <th scope="row">#{record.get("id")}</th>
+                        <td>#{record.get("courseName")}</td>
+                        <td>#{record.get("classNumbers")}</td>
+                        <td>#{record.get("teachers")}</td>
                         <td>
                             <a href="">
-                                详情
+                                修改
                             </a>
                             <a href="">
                                 删除
-                            </a>
-                            <a href="">
-                                修改
                             </a>
                             <a href="">
                                 签到记录
                             </a>
                         </td>
                     </tr>
-
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>操作系统</td>
-                        <td>2014211501</td>
-                        <td>
-                            <a href="">
-                                详情
-                            </a>
-                            <a href="">
-                                删除
-                            </a>
-                            <a href="">
-                                修改
-                            </a>
-                            <a href="">
-                                签到记录
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>操作系统</td>
-                        <td>2014211501</td>
-                        <td>
-                            <a href="">
-                                详情
-                            </a>
-                            <a href="">
-                                删除
-                            </a>
-                            <a href="">
-                                修改
-                            </a>
-                            <a href="">
-                                签到记录
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>操作系统</td>
-                        <td>2014211501</td>
-                        <td>
-                            <a href="">
-                                详情
-                            </a>
-                            <a href="">
-                                删除
-                            </a>
-                            <a href="">
-                                修改
-                            </a>
-                            <a href="">
-                                签到记录
-                            </a>
-                        </td>
-
-                    </tr>
+                    </ui:repeat>
                     </tbody>
                 </table>
             </div>
