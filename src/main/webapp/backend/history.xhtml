@@ -42,6 +42,10 @@
                     <li><a href="/backend/classes">班级</a></li>
                     <li class="active"><a href="/backend/history">历史</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>当前用户: <span id="teacherName" /></a></li>
+                    <li><a href="/backend/logout">退出登录</a></li>
+                </ul>
         </div><!--/.nav-collapse -->
         </div>
     </nav>
@@ -61,5 +65,7 @@
     <h:outputScript library="js" name="speed-up.js"/>
     <h:outputScript library="js" name="bootstrap.js" />
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
+    <h:outputScript library="js" name="jquery-cookie.js" />
+    <h:outputScript library="js" name="authenication.js" />
 </h:body>
 </html>
