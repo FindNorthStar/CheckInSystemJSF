@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 
@@ -79,20 +80,16 @@
     <div class="container">
 
         <div class="top">
-            <h2>2014211502 学生管理</h2>
+            <h2>#{backend_student_admin.classNo} 学生管理</h2>
 
             <div class="brife-margin">
                 <p class="class-birfe">
-                    本班共<span class="student-count">30</span>人。<span class="course">课程:
+                    本班共<span class="student-count">#{backend_student_admin.studentCount}</span>人。<span class="course">课程:
+                    <ui:repeat var="course" value="#{backend_student_admin.courseList}" >
                     <span class="course">
-                        <a href="">OS</a>
+                        <a href="#">#{course.get('courseName')}</a>
                     </span>
-                    <span class="course">
-                       <a href="">啊明哲</a>
-                    </span>
-                    <span class="course">
-                        <a href="">好,啊</a>
-                    </span>
+                    </ui:repeat>
                 </span>
                 </p>
             </div>
@@ -117,125 +114,21 @@
                 </thead>
 
                 <tbody>
+                <ui:repeat var="student" value="#{backend_student_admin.studentList}" >
                 <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
+                    <td>#{student.get("studentNo")}</td>
+                    <td>#{student.get("studentName")}</td>
+                    <td>#{student.get("macAddress")}</td>
                     <td>
-                        <a href="">
+                        <a href="#">
                             修改
                         </a>
-                        <a href="">
+                        <a href="#">
                             删除
                         </a>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2014212002</td>
-                    <td>阿一鸣</td>
-                    <td>A1BACF865432</td>
-                    <td>
-                        <a href="">
-                            修改
-                        </a>
-                        <a href="">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-
+                </ui:repeat>
                 </tbody>
             </table>
         </div>

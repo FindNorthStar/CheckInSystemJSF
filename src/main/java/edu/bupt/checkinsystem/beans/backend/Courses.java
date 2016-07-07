@@ -1,6 +1,5 @@
 package edu.bupt.checkinsystem.beans.backend;
 
-import com.sun.javadoc.SerialFieldTag;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.faces.bean.ManagedBean;
