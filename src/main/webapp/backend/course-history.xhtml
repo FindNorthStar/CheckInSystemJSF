@@ -102,6 +102,7 @@
                     <th>姓名</th>
                     <th>签到次数</th>
                     <th>缺到次数</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -111,6 +112,7 @@
                         <td>#{student.get("studentName")}</td>
                         <td>#{student.get("checkInCount")}</td>
                         <td> </td>
+                        <td><a href='/backend/student-history?studentId=#{student.get("id")}&amp;start=#{backend_course_history.startDate}&amp;end=#{backend_course_history.endDate}&amp;courseId=#{backend_course_history.courseId}'>查看详情</a></td>
                     </tr>
                 </ui:repeat>
                 </tbody>

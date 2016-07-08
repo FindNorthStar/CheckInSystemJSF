@@ -45,6 +45,10 @@ public class CourseHistory implements Serializable {
         }
     }
 
+    public Integer getCourseId() {
+        return courseId;
+    }
+
     public String getStartDate() {
         startDate = Faces.getRequestParameter("start");
         if (startDate == null || startDate.equals(""))
