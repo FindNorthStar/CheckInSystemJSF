@@ -13,7 +13,6 @@ import javax.servlet.ServletContext;
 @RewriteConfiguration
 public class RewriteManager extends HttpConfigurationProvider
 {
-    @Override
     public Configuration getConfiguration(ServletContext context)
     {
         return ConfigurationBuilder.begin()
@@ -25,7 +24,6 @@ public class RewriteManager extends HttpConfigurationProvider
                 ;
     }
 
-    @Override
     public int priority()
     {
         return 0;
