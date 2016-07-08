@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;

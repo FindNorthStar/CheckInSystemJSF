@@ -1,7 +1,6 @@
 package edu.bupt.checkinsystem.entities;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * This is the RecordEntity class

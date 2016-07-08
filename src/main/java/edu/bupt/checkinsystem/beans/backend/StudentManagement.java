@@ -6,8 +6,6 @@ import org.omnifaces.util.Faces;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

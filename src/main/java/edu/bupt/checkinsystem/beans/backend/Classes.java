@@ -1,16 +1,11 @@
 package edu.bupt.checkinsystem.beans.backend;
 
-import edu.bupt.checkinsystem.Globals;
-import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 import org.intellij.lang.annotations.Language;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
