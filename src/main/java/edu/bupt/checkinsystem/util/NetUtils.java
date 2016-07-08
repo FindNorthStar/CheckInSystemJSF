@@ -32,7 +32,7 @@ public class NetUtils {
         map.put("10.125.103.17",  "BBBBBBBBBBBB");
         map.put("10.125.103.19",  "CCCCCCCCCCCC");
         map.put("10.125.103.159", "DDDDDDDDDDDD");
-        map.put("127.0.0.1", "EEEEEFEEEEEE");
+        map.put("127.0.0.1", "EEEEEFFEEEEE");
         return map;
     }
 }

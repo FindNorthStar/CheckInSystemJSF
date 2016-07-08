@@ -3,6 +3,7 @@ package edu.bupt.checkinsystem.beans;
 import edu.bupt.checkinsystem.Globals;
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -52,13 +53,15 @@ public class CheckIn implements Serializable {
     }
 
 
+    @Language("MySQL")
+    private static final String LIST_STUDENT_ID_SQL = "SELECT id FROM student WHERE macAddress = ?";
+
     private Integer getStudentId() throws Exception {
         if (studentId == null) {
             Map<Integer, Object> map = new HashMap<Integer, Object>();
             map.put(1, NetUtils.getMacAddress());
 
-            List<Map<String, Object>> resultList = SqlUtils.executeSqlQuery(
-                    "SELECT id FROM student WHERE macAddress = ?", map);
+            List<Map<String, Object>> resultList = SqlUtils.executeSqlQuery(LIST_STUDENT_ID_SQL, map);
 
             if (!resultList.isEmpty()) {
                 studentId = (Integer) resultList.get(0).get("id");
@@ -68,12 +71,19 @@ public class CheckIn implements Serializable {
     }
 
 
+    @Language("MySQL")
+    private static final String LIST_RECORD_ID_VERIFY_CHECK_IN_SAL = "SELECT id FROM record WHERE (eventId = ? AND studentId = ?)";
+
     private boolean isCheckedIn() throws Exception {
         Map<Integer, Object> param = new HashMap<Integer, Object>();
         param.put(1, Globals.currentEventId);
         param.put(2, studentId);
-        return !SqlUtils.executeSqlQuery("SELECT id FROM record WHERE (eventId = ? AND studentId = ?)", param).isEmpty();
+        return !SqlUtils.executeSqlQuery(LIST_RECORD_ID_VERIFY_CHECK_IN_SAL, param).isEmpty();
     }
+
+
+    @Language("MySQL")
+    private static final String INSERT_CHECK_IN_RECORD_SQL = "INSERT INTO record(studentId, eventId) VALUE (?, ?)";
 
     private void checkIn() throws Exception {
 
@@ -81,36 +91,42 @@ public class CheckIn implements Serializable {
         param.put(1, studentId);
         param.put(2, Globals.currentEventId);
 
-        SqlUtils.executeSqlUpdate("INSERT INTO record(studentId, eventId) VALUE (?, ?)", param);
+        SqlUtils.executeSqlUpdate(INSERT_CHECK_IN_RECORD_SQL, param);
     }
 
+
+    @Language("MySQL")
+    private static final String LIST_RECORD_BY_COURSE_TYPE_EVENT_STUDENT_SQL =
+            "SELECT c.courseName AS courseName, DATE_FORMAT(r.checkDateTime, \"%m-%d %H:%i\") AS checkDateTime, t.name AS typeName\n" +
+            "FROM course AS c, event AS e, record AS r, type AS t\n" +
+            "WHERE e.courseId = c.id AND e.typeId = t.id AND r.eventId = e.id AND r.studentId = ?\n" +
+            "ORDER BY r.checkDateTime DESC\n" +
+            "LIMIT 5\n";
 
     public List<Map<String, Object>> getRecords() throws Exception {
         if (records == null) {
             Map<Integer, Object> map = new HashMap<Integer, Object>();
             map.put(1, studentId);
 
-            records = SqlUtils.executeSqlQuery(
-                    "SELECT c.courseName AS courseName, DATE_FORMAT(r.checkDateTime, \"%m-%d %H:%i\") AS checkDateTime, t.name AS typeName\n" +
-                            "FROM course AS c, event AS e, record AS r, type AS t\n" +
-                            "WHERE e.courseId = c.id AND e.typeId = t.id AND r.eventId = e.id AND r.studentId = ?\n" +
-                            "ORDER BY r.checkDateTime DESC\n" +
-                            "LIMIT 5\n",
-                    map);
+            records = SqlUtils.executeSqlQuery(LIST_RECORD_BY_COURSE_TYPE_EVENT_STUDENT_SQL, map);
         }
 
         return records;
     }
 
 
-    public String getName() {
-        try {
+    @Language("MySQL")
+    private static final String LIST_STUDENT_NAME_SQL = "SELECT studentName FROM student WHERE id = ?";
+
+    public String getName() throws Exception {
+//        try {
             Map<Integer, Object> param = new HashMap<Integer, Object>();
             param.put(1, studentId);
-            List<Map<String, Object>> maps = SqlUtils.executeSqlQuery("SELECT studentName FROM student WHERE id = ?", param);
+            List<Map<String, Object>> maps = SqlUtils.executeSqlQuery(LIST_STUDENT_NAME_SQL, param);
             return (String) maps.get(0).get("studentName");
-        } catch (Exception e) {
-            return "孙艺";
-        }
+//        }
+//        catch (Exception e) {
+//            return "孙艺";
+//        }
     }
 }

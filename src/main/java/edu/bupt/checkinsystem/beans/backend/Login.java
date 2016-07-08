@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.PasswordUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
 import javax.annotation.PostConstruct;
@@ -73,10 +74,14 @@ public class Login implements Serializable {
         }
     }
 
+
+    @Language("MySQL")
+    private static final String LIST_TEACHER_HASH_NAME_SQL = "SELECT hash, teacherName FROM teacher WHERE username = ?";
+
     private String getTeacherName() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, getUsername());
-        List<Map<String, Object>> result = SqlUtils.executeSqlQuery("SELECT hash, teacherName FROM teacher WHERE username = ?", map);
+        List<Map<String, Object>> result = SqlUtils.executeSqlQuery(LIST_TEACHER_HASH_NAME_SQL, map);
         if (result.isEmpty()) return null;
         if (!PasswordUtils.checkPassword(result.get(0).get("hash"), getPassword())) return null;
         return (String) result.get(0).get("teacherName");

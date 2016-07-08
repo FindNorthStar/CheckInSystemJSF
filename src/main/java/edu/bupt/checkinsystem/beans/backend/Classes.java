@@ -3,6 +3,7 @@ package edu.bupt.checkinsystem.beans.backend;
 import edu.bupt.checkinsystem.Globals;
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -19,8 +20,11 @@ public class Classes implements Serializable {
 
     private List<Map<String, Object>> classes = null;
 
+    @Language("MySQL")
+    private static final String LIST_CLASSES_SQL = "SELECT id, classNo FROM class";
+
     public List<Map<String, Object>> getClasses() throws Exception {
-        classes = SqlUtils.executeSqlQuery("SELECT id, classNo FROM class");
+        classes = SqlUtils.executeSqlQuery(LIST_CLASSES_SQL);
         return classes;
     }
 }

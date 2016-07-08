@@ -35,10 +35,13 @@ public class Register implements Serializable {
         }
     }
 
+
+    private static final String LIST_ID_TO_VERIFY_REGISTERED_SQL = "SELECT id FROM student WHERE macAddress = ?";
+
     private boolean isRegistered(String macAddress) throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, macAddress);
-        List<Map<String, Object>> result = SqlUtils.executeSqlQuery("SELECT id FROM student WHERE macAddress = ?", map);
+        List<Map<String, Object>> result = SqlUtils.executeSqlQuery(LIST_ID_TO_VERIFY_REGISTERED_SQL, map);
         return !result.isEmpty();
     }
 
@@ -59,6 +62,8 @@ public class Register implements Serializable {
     }
 
 
+    private static final String UPDATE_STUDENT_TO_REGISTER = "UPDATE student SET macAddress = ? WHERE studentNo = ?";
+
     public void submit() throws Exception {
         // UPDATE student to map macAddress
 
@@ -66,7 +71,7 @@ public class Register implements Serializable {
         map.put(1, NetUtils.getMacAddress());
         map.put(2, getStudentNo());
 
-        SqlUtils.executeSqlUpdate("UPDATE student SET macAddress = ? WHERE studentNo = ?", map);
+        SqlUtils.executeSqlUpdate(UPDATE_STUDENT_TO_REGISTER, map);
         FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
     }
 }

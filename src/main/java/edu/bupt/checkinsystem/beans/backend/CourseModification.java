@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +21,10 @@ public class CourseModification implements Serializable {
 
     private List<SelectItem> classes;
     private String teachers;
+
+    @Language("MySQL")
     private static final String LIST_CLASSES_SQL = "SELECT id, classNo FROM class";
+    @Language("MySQL")
     private static final String GET_COURSE_INFO_SQL = "SELECT courseName, teachers FROM course WHERE id = ?";
 
     @PostConstruct
@@ -43,6 +47,7 @@ public class CourseModification implements Serializable {
             }
         }
     }
+
 
     public List<SelectItem> getClasses() throws Exception {
         if (classes == null) {
@@ -73,7 +78,10 @@ public class CourseModification implements Serializable {
         this.courseName = courseName;
     }
 
+
+    @Language("MySQL")
     private static final String GET_COURSE_CLASSES_SQL = "SELECT classId from courseClass WHERE courseId = ?";
+
     public List<String> getSelectedClasses() throws Exception {
         if (selectedClasses == null) {
             selectedClasses = new ArrayList<String>();
@@ -99,9 +107,14 @@ public class CourseModification implements Serializable {
         this.teachers = teachers;
     }
 
+
+    @Language("MySQL")
     private static final String UPDATE_COURSE_SQL = "UPDATE course SET courseName = ?, teachers = ? WHERE id = ?";
+    @Language("MySQL")
     private static final String INSERT_REL_SQL = "INSERT IGNORE INTO courseClass (courseId, classId) VALUES (?, ?)";
+    @Language("MySQL")
     private static final String DELETE_REL_SQL = "DELETE IGNORE FROM courseClass WHERE courseId = ? AND classId = ?";
+
     public void submit() throws Exception {
         Map<Integer, Object> courseMap = new HashMap<Integer, Object>();
         courseMap.put(1, courseName);

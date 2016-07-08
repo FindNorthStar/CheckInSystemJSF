@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
 import javax.annotation.PostConstruct;
@@ -59,12 +60,15 @@ public class StudentHistory implements Serializable {
         return endDate;
     }
 
+
+    @Language("MySQL")
+    private static final String LIST_STUDENT_NAME_SQL = "SELECT studentName " +
+                        "FROM student WHERE id = ?";
+
     public String getStudentName() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, studentId);
-        List<Map<String, Object>> result = SqlUtils.executeSqlQuery("SELECT studentName " +
-                        "FROM student WHERE id = ?"
-                , map);
+        List<Map<String, Object>> result = SqlUtils.executeSqlQuery(LIST_STUDENT_NAME_SQL, map);
         studentName = (String) result.get(0).get("studentName");
         return studentName;
     }
@@ -78,13 +82,17 @@ public class StudentHistory implements Serializable {
         return courseId;
     }
 
+
+    @Language("MySQL")
+    private static final String LIST_COURSE_SQL = "SELECT course.id AS courseId, course.courseName AS courseName \n" +
+                "FROM course, courseClass, student\n" +
+                "WHERE courseClass.classId = student.classId AND course.id = courseClass.courseId AND student.id = ? \n" +
+                "ORDER BY course.id";
+
     public List<Map<String, Object>> getCourseList() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, studentId);
-        courseList = SqlUtils.executeSqlQuery("SELECT course.id AS courseId, course.courseName AS courseName \n" +
-                "FROM course, courseClass, student\n" +
-                "WHERE courseClass.classId = student.classId AND course.id = courseClass.courseId AND student.id = ? \n" +
-                "ORDER BY course.id", map);
+        courseList = SqlUtils.executeSqlQuery(LIST_COURSE_SQL, map);
         return courseList;
     }
 
@@ -94,9 +102,11 @@ public class StudentHistory implements Serializable {
         map.put(1, studentId);
         map.put(2, getStartDate());
         map.put(3, getEndDate());
-        String QUERY_SQL;
+
+        @Language("MySQL") String querySql;
+
         if (getCourseId() == 0) {
-            QUERY_SQL = "SELECT \n" +
+            querySql = "SELECT \n" +
                     "\tDATE_FORMAT(event.startDateTime, \"%m-%d %H:%i\") AS eventTime,\n" +
                     "\tcourse.courseName AS courseName,\n" +
                     "\ttype.name AS typeName,\n" +
@@ -116,7 +126,7 @@ public class StudentHistory implements Serializable {
                     "ORDER BY event.startDateTime DESC";
         } else {
             map.put(4, courseId);
-            QUERY_SQL = "SELECT \n" +
+            querySql = "SELECT \n" +
                     "\tDATE_FORMAT(event.startDateTime, \"%m-%d %H:%i\") AS eventTime,\n" +
                     "\tcourse.courseName AS courseName,\n" +
                     "\ttype.name AS typeName,\n" +
@@ -134,7 +144,7 @@ public class StudentHistory implements Serializable {
                     "\tAND course.id = ?\n" +
                     "ORDER BY event.startDateTime DESC";
         }
-        eventList = SqlUtils.executeSqlQuery(QUERY_SQL, map);
+        eventList = SqlUtils.executeSqlQuery(querySql, map);
         return eventList;
     }
 }

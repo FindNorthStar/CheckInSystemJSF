@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -12,6 +13,8 @@ import java.util.Map;
 @RequestScoped
 public class Courses implements Serializable {
     private List<Map<String, Object>> records = null;
+
+    @Language("MySQL")
     private static final String LIST_ALL_COURSES_SQL =
             "SELECT course.id, " +
                     "course.courseName, " +
