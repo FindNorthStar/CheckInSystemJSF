@@ -99,7 +99,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">上课班级</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-9" id="selectClassesDiv">
                             <h:selectManyCheckbox value="#{backend_course_modification.selectedClasses}" >
                                 <f:selectItems value="#{backend_course_modification.classes}" styleClass="checkbox-inline" />
                             </h:selectManyCheckbox>
@@ -133,6 +133,11 @@
     <h:outputScript>
         $(document).ready(function(){
             $("td label").addClass("checkbox-inline");
+            $(".form-group td").each(function (e) {
+                $(this).find('input').detach().prependTo($(this).find('label'));
+                $(this).find('label').detach().appendTo($("#selectClassesDiv"));
+            });
+            $("#selectClassesDiv table").remove();
         });
     </h:outputScript>
     <script>
