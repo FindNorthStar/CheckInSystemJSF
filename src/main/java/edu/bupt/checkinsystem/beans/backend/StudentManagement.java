@@ -40,6 +40,10 @@ public class StudentManagement implements Serializable {
         }
     }
 
+    public Integer getClassId() {
+        return classId;
+    }
+
     public String getClassNo() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, classId);
