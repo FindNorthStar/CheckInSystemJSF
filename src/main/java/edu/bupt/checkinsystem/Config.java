@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class Config {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://10.125.103.123:3306/sunyi";
+    private static final String JDBC_URL = "jdbc:mysql://10.125.103.123:3306/sunyi?useUnicode=true&characterEncoding=UTF-8";  // 这一行必须保留, 否则会乱码
     private static final String USERNAME = "sunyi";
     private static final String PASSWORD = "sunyi";
 
