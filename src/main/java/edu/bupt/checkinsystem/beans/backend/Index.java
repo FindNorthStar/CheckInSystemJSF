@@ -46,7 +46,7 @@ public class Index implements Serializable {
     private List<SelectItem> typeList = null;
     private List<SelectItem> courseList = null;
 
-    private String courseJsonObjectContainClassesTeachersArray = null;
+    private String courseJsonObjectContainClassesTeachersObject = null;
 
     private String selectedCourseName = null;
     private String selectedTypeName = "1";
@@ -90,14 +90,14 @@ public class Index implements Serializable {
     }
 
 
-    public String getCourseJsonObjectContainClassesTeachersArray() {
-        if (courseJsonObjectContainClassesTeachersArray == null) {
+    public String getCourseJsonObjectContainClassesTeachersObject() {
+        if (courseJsonObjectContainClassesTeachersObject == null) {
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-            courseJsonObjectContainClassesTeachersArray = gson.toJson(
+            courseJsonObjectContainClassesTeachersObject = gson.toJson(
                     courseClassesTeachers, new TypeToken<Map<String, Map<String, String>>>(){}.getType());
         }
 
-        return courseJsonObjectContainClassesTeachersArray;
+        return courseJsonObjectContainClassesTeachersObject;
     }
 
     public String getSelectedCourseName() {

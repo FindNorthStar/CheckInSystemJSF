@@ -162,7 +162,7 @@
     <h:outputScript>
         function change_class() {
             var courseId = $(".course_select").find(":selected").val();
-            var json = #{backend_index.courseJsonObjectContainClassesTeachersArray};
+            var json = #{backend_index.courseJsonObjectContainClassesTeachersObject};
             var classes = json[courseId]["classes"];
             var teachers = json[courseId]["teachers"];
             $("#classes-names").text(classes);
