@@ -8,6 +8,7 @@ import edu.bupt.checkinsystem.util.SqlUtils;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,16 +40,16 @@ public class Index implements Serializable {
                     "GROUP BY\n" +
                     "    course.courseName;";
 
-    private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT name FROM type";
+    private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT id, name FROM type";
 
     private List<Map<String, Object>> resultList = null;
     private Map<String, String> courseClasses = null;
-    private List<String> typeList = null;
+    private List<SelectItem> typeList = null;
     private String courseClassJsonArray = null;
-    private List<String> courseList = null;
+    private List<SelectItem> courseList = null;
 
     private String selectedCourseName = null;
-    private String selectedTypeName = "上课";
+    private String selectedTypeName = "1";
 
     @PostConstruct
     private void init() {
@@ -61,15 +62,14 @@ public class Index implements Serializable {
     }
 
 
-    public List<String> getCourseList() throws Exception {
+    public List<SelectItem> getCourseList() throws Exception {
         if (courseList == null) {
-            courseList = new ArrayList<String>();
+            courseList = new ArrayList<SelectItem>();
             for (Map<String, Object> column
                     : resultList) {
-                courseList.add(column.get("courseName").toString());
+                courseList.add(new SelectItem(String.valueOf(column.get("id")), column.get("courseName").toString()));
             }
         }
-
         return courseList;
     }
 
@@ -93,15 +93,15 @@ public class Index implements Serializable {
     }
 
 
-    public List<String> getTypeList() throws Exception {
+    public List<SelectItem> getTypeList() throws Exception {
         if (typeList == null) {
-            typeList = new ArrayList<String>();
+            typeList = new ArrayList<SelectItem>();
 
             List<Map<String, Object>> result = SqlUtils.executeSqlQuery(Index.LIST_ALL_COURSE_TYPE_SQL);
 
             for (Map<String, Object> column
                     : result) {
-                typeList.add(String.valueOf(column.get("name")));
+                typeList.add(new SelectItem(String.valueOf(column.get("id")), String.valueOf(column.get("name"))));
             }
         }
 

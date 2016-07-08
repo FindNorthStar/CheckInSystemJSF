@@ -95,8 +95,7 @@
                             <div class="col-sm-9">
                                 <h:selectOneMenu styleClass="course_select form-control"
                                                  value="#{backend_index.selectedCourseName}">
-                                    <f:selectItems value="#{backend_index.courseList}" var="course"
-                                                   itemLabel="#{course}" itemValue="#{course}" />
+                                    <f:selectItems value="#{backend_index.courseList}" />
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -113,8 +112,7 @@
                             <div class="col-sm-9 left">
                                 <div id="type_group" class="btn-group" data-toggle="buttons">
                                     <h:selectOneRadio value="#{backend_index.selectedTypeName}">
-                                        <f:selectItems value="#{backend_index.typeList}" var="typeName"
-                                                       itemValue="#{typeName}" itemLabel="#{typeName}" />
+                                        <f:selectItems value="#{backend_index.typeList}" />
                                     </h:selectOneRadio>
                                 </div>
                             </div>
@@ -154,20 +152,26 @@
     </script>
 
     <h:outputScript>
-        $(document).ready(change_class);
         function change_class() {
-        var course = $(".course_select").find(":selected").text()
-
-        function get_classes_by_course() {
-        var json = #{backend_index.courseClassJsonObject};
-        return json[course];
+            var course = $(".course_select").find(":selected").text();
+            var json = #{backend_index.courseClassJsonObject};
+            var classes = json[course];
+            $("#classes_names").text(classes);
         }
+        $(document).ready(function() {
+            change_class();
 
-        var classes = get_classes_by_course();
+            $("select").attr("size", null);
+            $("#type_group td").each(function (e) {
+                $(this).find('input').detach().prependTo($(this).find('label'));
+                $(this).find('label').addClass("btn btn-default");
+                $(this).find('label').detach().appendTo($("#type_group"));
+            });
+            $("#type_group table").remove();
+            $("#type_group label:first-child").addClass("active");
 
-        $("#classes_names").text(classes);
-        }
-        $(".course_select").on('change', change_class)
+            $(".course_select").on('change', change_class);
+        });
     </h:outputScript>
 </h:body>
 </html>
