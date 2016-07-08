@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import edu.bupt.checkinsystem.Globals;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +26,7 @@ import java.util.*;
 @ManagedBean(name = "backend_index")
 @RequestScoped
 public class Index implements Serializable {
-
+    @Language("MySQL")
     private static final String LIST_ALL_COURSES_SQL =
             "SELECT course.id, " +
                     "course.courseName, " +
@@ -39,6 +40,7 @@ public class Index implements Serializable {
                     "GROUP BY\n" +
                     "    course.courseName;";
 
+    @Language("MySQL")
     private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT id, name FROM type";
 
     private List<Map<String, Object>> resultList = null;
@@ -49,27 +51,51 @@ public class Index implements Serializable {
 
     private String courseJsonObjectContainClassesTeachersObject = null;
 
-    private String selectedCourseName = null;
-    private String selectedTypeName = "1";
+    private String selectedCourseId = "-1";
+    private String selectedTypeId = "1";
 
     @PostConstruct
     private void init() {
         try {
             resultList = SqlUtils.executeSqlQuery(LIST_ALL_COURSES_SQL);
             getCourseClassesTeachers();
+            if (Globals.currentEventId != null) {
+                initCurrentSelectedItems();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    public void submit() {
-        // The submit button action listener
-
-        changeBackendIndexDisable();
-        insertEventId();
+    @Language("MySQL")
+    private static final String GET_CURRENT_SELECTED_ITEMS_SQL = "SELECT courseId, typeId FROM event WHERE id = ?";
+    public void initCurrentSelectedItems() throws Exception {
+        Map<Integer, Object> args = new HashMap<Integer, Object>();
+        args.put(1, Globals.currentEventId);
+        List<Map<String, Object>> results = SqlUtils.executeSqlQuery(GET_CURRENT_SELECTED_ITEMS_SQL, args);
+        Map<String, Object> result = results.get(0);
+        selectedCourseId = String.valueOf(result.get("courseId"));
+        selectedTypeId = String.valueOf(result.get("typeId"));
     }
 
+    @Language("MySQL")
+    private static final String NEW_EVENT_SQL = "INSERT INTO event (courseId, typeId) VALUES (?, ?)";
+    public void submit() throws Exception {
+        // The submit button action listener
+        if (Globals.currentEventId == null) {
+            Map<Integer, Object> map = new HashMap<Integer, Object>();
+            map.put(1, Integer.valueOf(selectedCourseId));
+            map.put(2, Integer.valueOf(selectedTypeId));
+            List<Map<String, Object>> result = SqlUtils.executeSqlInsertAndGetIt(NEW_EVENT_SQL, map);
+            Globals.currentEventId = Integer.valueOf(String.valueOf(result.get(0).get("GENERATED_KEY")));
+        } else {
+            Globals.currentEventId = null;
+        }
+    }
+
+    public boolean getDisabled() {
+        return Globals.currentEventId != null;
+    }
 
     public List<SelectItem> getCourseList() throws Exception {
         if (courseList == null) {
@@ -109,20 +135,20 @@ public class Index implements Serializable {
         return courseJsonObjectContainClassesTeachersObject;
     }
 
-    public String getSelectedCourseName() {
-        return selectedCourseName;
+    public String getSelectedCourseId() {
+        return selectedCourseId;
     }
 
-    public void setSelectedCourseName(String selectedCourseName) {
-        this.selectedCourseName = selectedCourseName;
+    public void setSelectedCourseId(String selectedCourseId) {
+        this.selectedCourseId = selectedCourseId;
     }
 
-    public String getSelectedTypeName() {
-        return selectedTypeName;
+    public String getSelectedTypeId() {
+        return selectedTypeId;
     }
 
-    public void setSelectedTypeName(String selectedTypeName) {
-        this.selectedTypeName = selectedTypeName;
+    public void setSelectedTypeId(String selectedTypeId) {
+        this.selectedTypeId = selectedTypeId;
     }
 
     private Map<String, Map<String, String>> getCourseClassesTeachers() {
@@ -141,17 +167,5 @@ public class Index implements Serializable {
         }
 
         return courseClassesTeachers;
-    }
-
-    public boolean isBackendIndexDisable() {
-        return Globals.isBackendIndexSelectDisable;
-    }
-
-    private void changeBackendIndexDisable() {
-        Globals.isBackendIndexSelectDisable = !Globals.isBackendIndexSelectDisable;
-    }
-
-    private void insertEventId() {
-        // TODO: 16/7/8 Insert Event Id
     }
 }

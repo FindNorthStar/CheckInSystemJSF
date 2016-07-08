@@ -94,7 +94,7 @@
                             <label class="col-sm-3 control-label">课程</label>
                             <div class="col-sm-9">
                                 <h:selectOneMenu styleClass="course_select form-control"
-                                                 value="#{backend_index.selectedCourseName}">
+                                                 value="#{backend_index.selectedCourseId}">
                                     <f:selectItems value="#{backend_index.courseList}"/>
                                 </h:selectOneMenu>
                             </div>
@@ -119,7 +119,7 @@
                             <label class="col-sm-3 control-label">签到类型</label>
                             <div class="col-sm-9 left">
                                 <div id="type_group" class="btn-group" data-toggle="buttons">
-                                    <h:selectOneRadio value="#{backend_index.selectedTypeName}">
+                                    <h:selectOneRadio value="#{backend_index.selectedTypeId}">
                                         <f:selectItems value="#{backend_index.typeList}"/>
                                     </h:selectOneRadio>
                                 </div>
@@ -141,17 +141,17 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
-    <script>
-
-    </script>
-
     <h:outputScript>
-        var disabled = #{backend_index.backendIndexDisable};
+        var disabled = #{backend_index.disabled};
+        var currentCourseId = #{backend_index.selectedCourseId} +0;
+        var currentTypeId = #{backend_index.selectedTypeId};
 
         function check_state() {
             var submit_btn = $(".start-btn");
 
             if (disabled) {
+                $("#type_group input[value=" + currentTypeId + "]").parent().addClass("active");
+                $('.course_select').val(currentCourseId);
                 $("select").prop("disabled", true);
                 $("label").addClass("disabled");
                 submit_btn.val("结束");
@@ -160,6 +160,7 @@
                 $("select").prop("disabled", false);
                 $("label").removeClass("disabled");
                 submit_btn.val("开始");
+                $("#type_group label:first-child").addClass("active");
             }
         }
 
@@ -172,19 +173,19 @@
             $("#teachers-name").text(teachers);
         }
 
-        $(document).ready(function() {
-            check_state();
-            change_class();
-
+        function apply_style() {
             $("select").attr("size", null);
             $("#type_group td").each(function (e) {
                 $(this).find('input').detach().prependTo($(this).find('label'));
                 $(this).find('label').addClass("btn btn-default");
                 $(this).find('label').detach().appendTo($("#type_group"));
             });
-
             $("#type_group table").remove();
-            $("#type_group label:first-child").addClass("active");
+        }
+        $(document).ready(function() {
+            apply_style();
+            check_state();
+            change_class();
 
             $(".course_select").on('change', change_class);
         });

@@ -8,7 +8,6 @@ package edu.bupt.checkinsystem;
  * @since 16/7/6 19:16
  */
 public class Globals {
-    public static int currentEventId = 1;  // FIXME: 1 is the test value.
-
-    public static boolean isBackendIndexSelectDisable = false;
+    // It can contains null if no event is currently running.
+    public static Integer currentEventId = null;
 }
