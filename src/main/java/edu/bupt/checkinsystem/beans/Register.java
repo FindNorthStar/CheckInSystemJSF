@@ -3,11 +3,11 @@ package edu.bupt.checkinsystem.beans;
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 import org.intellij.lang.annotations.Language;
+import org.omnifaces.util.Faces;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +25,11 @@ public class Register implements Serializable {
     public void init() {
         try {
             if (NetUtils.getMacAddress() == null) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
+                Faces.redirect("ban");
             }
 
             if (isRegistered(NetUtils.getMacAddress())) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
+                Faces.redirect("checkin");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,6 +73,6 @@ public class Register implements Serializable {
         map.put(2, getStudentNo());
 
         SqlUtils.executeSqlUpdate(UPDATE_STUDENT_TO_REGISTER, map);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("checkin");
+        Faces.redirect("checkin");
     }
 }

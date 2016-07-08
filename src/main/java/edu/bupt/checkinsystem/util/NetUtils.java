@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.util;
 
-import javax.faces.context.FacesContext;
+import org.omnifaces.util.Faces;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class NetUtils {
 
     public static HttpServletRequest getRequest() {
-        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return Faces.getRequest();
     }
 
     public static String getIpAddress() {
