@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <h:head>
@@ -59,7 +60,7 @@
     <div class="container">
 
         <div class="page-header">
-            <h1>操作系统(1,2,3班) 签到历史</h1>
+            <h1>#{backend_course_history.courseName} 签到历史</h1>
         </div>
         <div style="padding-bottom: 20px;">
             <form class="form-inline">
@@ -77,46 +78,41 @@
                 </div>
             </form>
         </div>
+        <div id="statistics">
+            <p>
+                班级:
+                <ui:repeat var="clazz" value="#{backend_course_history.classList}" >
+                    <span>#{clazz.get("classNo")}</span>
+                </ui:repeat>
+            </p>
+            <p>
+                总应签到次数:
+                #{backend_course_history.totalEventCount}
+            </p>
+            <p>
+                总人数:
+                #{backend_course_history.totalStudentCount}
+            </p>
+        </div>
         <div id="by-person">
             <table class="table table-striped sortable">
                 <thead>
                 <tr>
-                    <th>姓名</th>
                     <th>学号</th>
+                    <th>姓名</th>
                     <th>签到次数</th>
                     <th>缺到次数</th>
-                    <th>总次数</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>小明哲</td>
-                    <td>1234567890</td>
-                    <td>18</td>
-                    <td>2</td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <td>中明哲</td>
-                    <td>1234567890</td>
-                    <td>15</td>
-                    <td>5</td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <td>微明哲</td>
-                    <td>1234567890</td>
-                    <td>17</td>
-                    <td>3</td>
-                    <td>20</td>
-                </tr>
-                <tr>
-                    <td>老明哲</td>
-                    <td>1234567890</td>
-                    <td>17</td>
-                    <td>3</td>
-                    <td>20</td>
-                </tr>
+                <ui:repeat var="student" value="#{backend_course_history.studentList}" >
+                    <tr>
+                        <td>#{student.get("studentNo")}</td>
+                        <td>#{student.get("studentName")}</td>
+                        <td>#{student.get("checkInCount")}</td>
+                        <td>fuck</td>
+                    </tr>
+                </ui:repeat>
                 </tbody>
             </table>
         </div>
