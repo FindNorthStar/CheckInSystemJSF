@@ -40,18 +40,15 @@ public class StudentHistory implements Serializable {
     }
 
     public String getStartDate() {
-        try {
-            startDate = Faces.getRequestParameter("start");
-        } catch (Exception e) {
+        startDate = Faces.getRequestParameter("start");
+        if (startDate == null)
             startDate = "1970-01-01";
-        }
         return startDate;
     }
 
     public String getEndDate() {
-        try {
-            endDate = Faces.getRequestParameter("end");
-        } catch (Exception e) {
+        endDate = Faces.getRequestParameter("end");
+        if (endDate == null) {
             endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         }
         return endDate;
