@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <h:head>
@@ -55,10 +56,10 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>小明哲 的签到记录</h1>
+        <h1>#{backend_student_history.studentName} 的签到记录</h1>
     </div>
     <div>
-        <form class="form-inline">
+        <form class="form-inline" >
             <span>时间</span>
             <div class="form-group">
                 <div class="input-daterange input-group" id="datepicker">
@@ -70,9 +71,9 @@
             <span>课程</span>
             <select class="form-control" name="course">
                 <option value="0">所有课程</option>
-                <option value="453">计算机组织与结构</option>
-                <option value="478">操作系统</option>
-                <option value="666">毛gay</option>
+                <ui:repeat var="course" value="#{backend_student_history.courseList}" >
+                    <option value='#{course.get("courseId")}'>#{course.get("courseName")}</option>
+                </ui:repeat>
             </select>
             <button class="btn btn-default" type="submit">查询</button>
         </form>
@@ -86,34 +87,16 @@
                 <th>状态</th>
                 <th>操作</th>
             </tr>
-            <tr>
-                <td>01-01 00:00</td>
-                <td>操作系统</td>
-                <td>下课</td>
-                <td>未签到</td>
-                <td><a href="#">补签</a> <a href="#">申诉</a></td>
-            </tr>
-            <tr>
-                <td>01-01 00:00</td>
-                <td>操作系统</td>
-                <td>上课</td>
-                <td>已签到</td>
-                <td><a href="#">补签</a> <a href="#">申诉</a></td>
-            </tr>
-            <tr>
-                <td>01-01 00:00</td>
-                <td>毛gay</td>
-                <td>下课</td>
-                <td>已签到</td>
-                <td><a href="#">补签</a> <a href="#">申诉</a></td>
-            </tr>
-            <tr>
-                <td>01-01 00:00</td>
-                <td>毛gay</td>
-                <td>上课</td>
-                <td>未签到</td>
-                <td><a href="#">补签</a> <a href="#">申诉</a></td>
-            </tr>
+            <ui:repeat var="event" value="#{backend_student_history.eventList}" >
+                <tr>
+                    <td>#{event.get("eventTime")}</td>
+                    <td>#{event.get("courseName")}</td>
+                    <td>#{event.get("typeName")}</td>
+                    <td>#{event.get("checkInTime")}</td>
+                    <td><a href="#">补签</a> <a href="#">申诉</a></td>
+                </tr>
+            </ui:repeat>
+
         </table>
     </div>
     </div>
