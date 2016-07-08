@@ -120,6 +120,9 @@
                     <td>#{student.get("studentName")}</td>
                     <td>#{student.get("macAddress")}</td>
                     <td>
+                        <a href='/backend/student-history?studentId=#{student.get("id")}'>
+                            签到记录
+                        </a>
                         <a href="#">
                             修改
                         </a>
