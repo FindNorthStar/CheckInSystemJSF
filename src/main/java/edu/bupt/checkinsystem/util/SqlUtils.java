@@ -1,10 +1,13 @@
 package edu.bupt.checkinsystem.util;
 
 import edu.bupt.checkinsystem.Config;
+import org.intellij.lang.annotations.Language;
 
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is the SqlUtils class
@@ -20,7 +23,7 @@ public class SqlUtils {
      * @return 数据列
      * @throws Exception
      */
-    public static List<Map<String, Object>> executeSqlQuery(String query) throws Exception {
+    public static List<Map<String, Object>> executeSqlQuery(@Language("MySQL")String query) throws Exception {
         Connection connection = Config.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -40,7 +43,7 @@ public class SqlUtils {
      * @return 数据列
      * @throws Exception
      */
-    public static List<Map<String, Object>> executeSqlQuery(String query, Map<Integer, Object> args) throws Exception {
+    public static List<Map<String, Object>> executeSqlQuery(@Language("MySQL")String query, Map<Integer, Object> args) throws Exception {
         Connection connection = Config.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         for (Map.Entry<Integer, Object> column : args.entrySet()) {
@@ -63,7 +66,7 @@ public class SqlUtils {
      * @return 插入的列, 如果没有行被更新则返回 null
      * @throws Exception
      */
-    public static List<Map<String, Object>> executeSqlInsertAndGetIt(String query, Map<Integer, Object> row) throws Exception {
+    public static List<Map<String, Object>> executeSqlInsertAndGetIt(@Language("MySQL")String query, Map<Integer, Object> row) throws Exception {
         Connection connection = Config.getConnection();
         List<Map<String, Object>> rows = null;
         PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -89,7 +92,7 @@ public class SqlUtils {
      * @return 状态, 见 https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#SUCCESS_NO_INFO
      * @throws Exception
      */
-    public static int executeSqlUpdate(String query, Map<Integer, Object> row) throws Exception {
+    public static int executeSqlUpdate(@Language("MySQL")String query, Map<Integer, Object> row) throws Exception {
         Connection connection = Config.getConnection();
         connection.setAutoCommit(false);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -111,7 +114,7 @@ public class SqlUtils {
      * @return 状态, 与 List 顺序相同。见 https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html#SUCCESS_NO_INFO
      * @throws Exception
      */
-    public static int[] executeSqlUpdate(String query, List<Map<Integer, Object>> rows) throws Exception {
+    public static int[] executeSqlUpdate(@Language("MySQL")String query, List<Map<Integer, Object>> rows) throws Exception {
         Connection connection = Config.getConnection();
         connection.setAutoCommit(false);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
