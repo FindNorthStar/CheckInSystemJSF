@@ -48,7 +48,7 @@ public class Index implements Serializable {
     private List<String> courseList = null;
 
     private String selectedCourseName = null;
-    private String selectedTypeName;
+    private String selectedTypeName = "上课";
 
     @PostConstruct
     private void init() {
