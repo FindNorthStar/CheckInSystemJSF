@@ -107,10 +107,10 @@
                 <tbody>
                 <ui:repeat var="student" value="#{backend_course_history.studentList}" >
                     <tr>
-                        <td>#{student.get("studentNumber")}</td>
+                        <td>#{student.get("studentNo")}</td>
                         <td>#{student.get("studentName")}</td>
                         <td>#{student.get("checkInCount")}</td>
-                        <td>fuck</td>
+                        <td> </td>
                     </tr>
                 </ui:repeat>
                 </tbody>
@@ -124,38 +124,17 @@
                     <th>类型</th>
                     <th>签到人数</th>
                     <th>缺到人数</th>
-                    <th>总人数</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>2016-02-01 00:00</td>
-                    <td>下课</td>
-                    <td>118</td>
-                    <td>7</td>
-                    <td>125</td>
-                </tr>
-                <tr>
-                    <td>2016-01-31 23:00</td>
-                    <td>上课</td>
-                    <td>110</td>
-                    <td>15</td>
-                    <td>125</td>
-                </tr>
-                <tr>
-                    <td>2016-01-03 15:00</td>
-                    <td>下课</td>
-                    <td>85</td>
-                    <td>40</td>
-                    <td>125</td>
-                </tr>
-                <tr>
-                    <td>2016-01-03 14:00</td>
-                    <td>上课</td>
-                    <td>75</td>
-                    <td>50</td>
-                    <td>125</td>
-                </tr>
+                <ui:repeat var="event" value="#{backend_course_history.eventList}" >
+                    <tr>
+                        <td>#{event.get("startDateTime")}</td>
+                        <td>#{event.get("typeName")}</td>
+                        <td>#{event.get("checkInCount")}</td>
+                        <td> </td>
+                    </tr>
+                </ui:repeat>
                 </tbody>
             </table>
         </div>

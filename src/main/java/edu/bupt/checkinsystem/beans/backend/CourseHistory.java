@@ -28,8 +28,8 @@ public class CourseHistory implements Serializable {
     private Integer totalStudentCount;
     private List<Map<String, Object>> classList = null;
     private String startDate, endDate;
-
     private List<Map<String, Object>> studentList = null;
+    private List<Map<String, Object>> eventList = null;
 
     @PostConstruct
     private void init() {
@@ -136,12 +136,30 @@ public class CourseHistory implements Serializable {
                 "\tAND student.classId = courseClass.classId\n" +
                 "ORDER BY studentNo";
 
-    public List<Map<String, Object>> getStudentList() throws Exception{
+    public List<Map<String, Object>> getStudentList() throws Exception {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, getStartDate());
         map.put(2, getEndDate());
         map.put(3, courseId);
         studentList = SqlUtils.executeSqlQuery(LIST_STUDENT_SQL, map);
         return studentList;
+    }
+
+    @Language("MySQL")
+    private static final String LIST_EVENT_SQL = "SELECT event.id, DATE(event.startDateTime) AS startDateTime, type.name AS typeName,\n" +
+            "\t(SELECT COUNT(*) FROM record WHERE record.eventId = event.id) AS checkInCount\n" +
+            "FROM event, type\n" +
+            "WHERE courseId = ?\n" +
+            "\tAND event.typeId = type.id\n" +
+            "\tAND DATE(event.startDateTime) BETWEEN ? AND ? \n" +
+            "ORDER BY event.startDateTime DESC";
+
+    public List<Map<String, Object>> getEventList() throws Exception {
+        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        map.put(1, courseId);
+        map.put(2, getStartDate());
+        map.put(3, getEndDate());
+        eventList = SqlUtils.executeSqlQuery(LIST_EVENT_SQL, map);
+        return eventList;
     }
 }
