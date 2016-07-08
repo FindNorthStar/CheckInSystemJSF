@@ -4,6 +4,7 @@ import edu.bupt.checkinsystem.Globals;
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 import org.intellij.lang.annotations.Language;
+import org.omnifaces.util.Faces;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,23 +26,24 @@ public class CheckIn implements Serializable {
     private void init() {
         try {
             if (NetUtils.getMacAddress() == null) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ban");
+                Faces.redirect("ban");
+            }
+
+            if (Globals.currentEventId == null) {
+                Faces.redirect("ban");
             }
 
             if (!isRegistered(getStudentId())) {
                 // Student not registered.
-                FacesContext.getCurrentInstance().getExternalContext().redirect("register");
-            } else {
-                // Student already registered.
-
-                if (isCheckedIn()) {
-                    // Student already checked in.
-
-                } else {
-                    // Student not checked in.
-                    checkIn();
-                }
+                Faces.redirect("register");
             }
+
+            // Student already registered.
+            if (!isCheckedIn()) {
+                // Student not checked in.
+                checkIn();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,7 +99,7 @@ public class CheckIn implements Serializable {
 
     @Language("MySQL")
     private static final String LIST_RECORD_BY_COURSE_TYPE_EVENT_STUDENT_SQL =
-            "SELECT c.courseName AS courseName, DATE_FORMAT(r.checkDateTime, \"%m-%d %H:%i\") AS checkDateTime, t.name AS typeName\n" +
+            "SELECT c.courseName AS courseName, DATE_FORMAT(r.checkDateTime, '%m-%d %H:%i') AS checkDateTime, t.name AS typeName\n" +
             "FROM course AS c, event AS e, record AS r, type AS t\n" +
             "WHERE e.courseId = c.id AND e.typeId = t.id AND r.eventId = e.id AND r.studentId = ?\n" +
             "ORDER BY r.checkDateTime DESC\n" +

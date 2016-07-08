@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans;
 
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import org.intellij.lang.annotations.Language;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -35,7 +36,7 @@ public class Register implements Serializable {
         }
     }
 
-
+    @Language("MySQL")
     private static final String LIST_ID_TO_VERIFY_REGISTERED_SQL = "SELECT id FROM student WHERE macAddress = ?";
 
     private boolean isRegistered(String macAddress) throws Exception {
@@ -61,7 +62,7 @@ public class Register implements Serializable {
         this.studentName = studentName;
     }
 
-
+    @Language("MySQL")
     private static final String UPDATE_STUDENT_TO_REGISTER = "UPDATE student SET macAddress = ? WHERE studentNo = ?";
 
     public void submit() throws Exception {
