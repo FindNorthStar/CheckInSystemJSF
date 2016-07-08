@@ -16,19 +16,16 @@ public class Courses implements Serializable {
 
     @Language("MySQL")
     private static final String LIST_ALL_COURSES_SQL =
-            "SELECT course.id, " +
-                    "course.courseName, " +
-                    "GROUP_CONCAT(class.classNo SEPARATOR ', ') AS classNumbers, " +
-                    "course.teachers\n" +
-            "FROM\n" +
-            "    class, course, courseClass\n" +
-            "WHERE\n" +
-            "    class.id = courseClass.classId AND\n" +
-            "    courseClass.courseId = course.id\n" +
-            "GROUP BY\n" +
-            "    course.courseName\n" +
-            "ORDER BY\n" +
-                    "course.id";
+            "SELECT course.id, \n" +
+                    "\tcourse.courseName, \n" +
+                    "\t\t(SELECT GROUP_CONCAT(class.classNo SEPARATOR ', ') \n" +
+                    "\t\t\tFROM class, courseClass \n" +
+                    "\t\t\tWHERE courseClass.courseId = course.id \n" +
+                    "\t\t\t\tAND class.id = courseClass.classId\n" +
+                    "\t\t) AS classNumbers, \n" +
+                    "\tcourse.teachers\n" +
+                    "FROM course\n" +
+                    "ORDER BY course.id";
 
 
     public List<Map<String, Object>> getRecords() throws Exception {
