@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <!-- BootStrap Core CSS-->
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+
+    <!-- Hack for IE 10 -->
+    <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"/>
+
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+
+        #selectClassesDiv {
+            text-align: left;
+        }
+
+        .form-group {
+            width: 400px;
+            margin-bottom: 25px !important;
+        }
+
+        .form-horizontal {
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .left {
+            text-align: left;
+
+        }
+
+        .submit-btn-ml {
+            margin-left: 6.333333%;
+        }
+
+        .mp {
+            margin-top: 50px;
+        }
+
+        .top {
+            margin-top: 40px;
+        }
+
+        .checkbox-ml {
+            margin-left: 9.133333%;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/backend/index">签到后台</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/backend/index">主页</a></li>
+                    <li><a href="/backend/search">查询</a></li>
+                    <li class="active"><a href="/backend/courses">课程</a></li>
+                    <li><a href="/backend/classes">班级</a></li>
+                    <li><a href="/backend/history">历史</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="top">
+
+            <center>
+
+                <h1><span id="titleClassName" />课程信息添加</h1>
+                <h:form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">课程名称</label>
+                        <div class="col-sm-9">
+                            <h:inputText styleClass="form-control" value="#{backend_course_add.courseName}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">上课班级</label>
+                        <div class="col-sm-9" id="selectClassesDiv">
+                            <h:selectManyCheckbox value="#{backend_course_add.selectedClasses}" >
+                                <f:selectItems value="#{backend_course_add.classes}" styleClass="checkbox-inline" />
+                            </h:selectManyCheckbox>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">授课教师</label>
+                        <div class="col-sm-9">
+                            <h:inputText styleClass="form-control" value="#{backend_course_add.teachers}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="submit-btn-ml col-sm-7">
+                            <h:commandButton styleClass="btn btn-default" value="提交" actionListener="#{backend_course_add.submit}"/>
+                        </div>
+                    </div>
+                </h:form>
+
+            </center>
+        </div>
+
+    </div><!-- /.container -->
+
+    <!-- Script here -->
+    <h:outputScript library="js" name="speed-up.js"/>
+    <h:outputScript library="js" name="bootstrap.js"/>
+    <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
+    <h:outputScript library="js" name="jquery-cookie.js"/>
+    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript>
+        $(document).ready(function(){
+            $("td label").addClass("checkbox-inline");
+            $(".form-group td").each(function (e) {
+                $(this).find('input').detach().prependTo($(this).find('label'));
+                $(this).find('label').detach().appendTo($("#selectClassesDiv"));
+            });
+            $("#selectClassesDiv table").remove();
+        });
+    </h:outputScript>
+    <script>
+
+    </script>
+</h:body>
+</html>

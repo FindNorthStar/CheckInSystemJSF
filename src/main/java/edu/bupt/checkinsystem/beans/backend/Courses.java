@@ -23,7 +23,9 @@ public class Courses implements Serializable {
             "    class.id = courseClass.classId AND\n" +
             "    courseClass.courseId = course.id\n" +
             "GROUP BY\n" +
-            "    course.courseName;";
+            "    course.courseName\n" +
+            "ORDER BY\n" +
+                    "course.id";
 
 
     public List<Map<String, Object>> getRecords() throws Exception {
