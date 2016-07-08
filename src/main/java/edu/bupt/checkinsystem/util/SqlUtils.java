@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.util;
 
 import edu.bupt.checkinsystem.Config;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
@@ -54,6 +55,32 @@ public class SqlUtils {
         connection.close();
         return rows;
     }
+
+    /**
+     * 执行单行插入并获取其数据
+     * @param query SQL 语句
+     * @param row 存数据的行, 第一个参数从 1 开始
+     * @return 插入的列, 如果没有行被更新则返回 null
+     * @throws Exception
+     */
+    public static List<Map<String, Object>> executeSqlInsertAndGetIt(String query, Map<Integer, Object> row) throws Exception {
+        Connection connection = Config.getConnection();
+        List<Map<String, Object>> rows = null;
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        for (Map.Entry<Integer, Object> column : row.entrySet()) {
+            preparedStatement.setObject(column.getKey(), column.getValue());
+        }
+        if (preparedStatement.executeUpdate() > 0) { // line updated
+            rows = new ArrayList<Map<String, Object>>();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            getHashMap(rows, generatedKeys);
+        }
+
+        preparedStatement.close();
+        connection.close();
+        return rows;
+    }
+
 
     /**
      * 执行单行插入/更新
