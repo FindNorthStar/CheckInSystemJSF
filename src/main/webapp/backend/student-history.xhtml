@@ -54,28 +54,36 @@
     </div>
 </nav>
 
+
 <div class="container">
     <div class="page-header">
         <h1>#{backend_student_history.studentName} 的签到记录</h1>
     </div>
-    <div>
-        <form class="form-inline" >
-            <span>时间</span>
-            <div class="form-group">
-                <div class="input-daterange input-group" id="datepicker">
-                    <input type="text" class="input-sm form-control" name="start"/>
-                    <span class="input-group-addon">to</span>
-                    <input type="text" class="input-sm form-control" name="end" />
+    <div class="row">
+        <form method="get">
+            <input type="hidden" name="studentId" value="#{backend_student_history.studentId}"/>
+            <div class="col-md-6">
+                <span>时间</span>
+                <div class="form-group">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="input-sm form-control" name="start" />
+                        <span class="input-group-addon">到</span>
+                        <input type="text" class="input-sm form-control" name="end" />
+                    </div>
                 </div>
             </div>
-            <span>课程</span>
-            <select class="form-control" name="course">
-                <option value="0">所有课程</option>
-                <ui:repeat var="course" value="#{backend_student_history.courseList}" >
-                    <option value='#{course.get("courseId")}'>#{course.get("courseName")}</option>
-                </ui:repeat>
-            </select>
-            <button class="btn btn-default" type="submit">查询</button>
+            <div class="col-md-3 col-md-offset-1">
+                <span>课程</span>
+                <select class="form-control" name="courseId">
+                    <option value="0">所有课程</option>
+                    <ui:repeat var="course" value="#{backend_student_history.courseList}" >
+                        <option id="courseIdSelection" value='#{course.get("courseId")}'>#{course.get("courseName")}</option>
+                    </ui:repeat>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-default query-button" type="submit">查询</button>
+            </div>
         </form>
     </div>
     <div>
@@ -92,8 +100,8 @@
                     <td>#{event.get("eventTime")}</td>
                     <td>#{event.get("courseName")}</td>
                     <td>#{event.get("typeName")}</td>
-                    <td>#{event.get("checkInTime")}</td>
-                    <td><a href="#">补签</a> <a href="#">申诉</a></td>
+                    <td class="event-status">#{event.get("checkInTime")}</td>
+                    <td class="event-operations"><a href="#">补签</a> <a href="#">申诉</a></td>
                 </tr>
             </ui:repeat>
 
@@ -108,15 +116,24 @@
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
     <h:outputScript>
-        $('.input-daterange').datepicker({
-            maxViewMode: 2,
-            todayBtn: "linked",
-            format: "yyyy-mm-dd",
-            todayHighlight: true
+        $(document).ready(function () {
+            $('.input-daterange').datepicker({
+                maxViewMode: 2,
+                todayBtn: "linked",
+                format: "yyyy-mm-dd",
+                todayHighlight: true,
+                startDate: '-7d',
+                endDate: '+0d'
+            });
+            // 先隐藏操作按钮
+            $('td.event-status:not(:empty)').addClass("success").parent().find(".event-operations a").hide();
+            // 状态加文字, 顺序不可颠倒
+            $('td.event-status:empty').text("未签到").addClass("danger");
+
+            $(".query-button").on('click', function() {
+                console.log($('#startDate').text() + $('#endDate').text() + $('#courseIdSelection').text());
+            });
         });
-        $('td:contains("未签到")').addClass("danger");
-        $('td:contains("已签到")').addClass("success");
-        $('tr:contains("已签到") a').hide();
     </h:outputScript>
 </h:body>
 </html>

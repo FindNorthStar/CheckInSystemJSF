@@ -17,6 +17,7 @@ import java.util.Map;
 @RequestScoped
 public class StudentHistory implements Serializable {
 
+
     private Integer studentId = 0;
     private String studentName;
     private Integer courseId = 0;
@@ -37,6 +38,10 @@ public class StudentHistory implements Serializable {
                 //Fuck you!
             }
         }
+    }
+
+    public Integer getStudentId() {
+        return studentId;
     }
 
     public String getStartDate() {
