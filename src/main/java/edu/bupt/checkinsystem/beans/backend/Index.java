@@ -3,6 +3,7 @@ package edu.bupt.checkinsystem.beans.backend;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
@@ -10,10 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is the Index class
@@ -43,10 +41,12 @@ public class Index implements Serializable {
     private static final String LIST_ALL_COURSE_TYPE_SQL = "SELECT id, name FROM type";
 
     private List<Map<String, Object>> resultList = null;
-    private Map<String, String> courseClasses = null;
+    private Map<String , Map<String, String>> courseClassesTeachers = null;
+
     private List<SelectItem> typeList = null;
-    private String courseClassJsonArray = null;
     private List<SelectItem> courseList = null;
+
+    private String courseJsonObjectContainClassesTeachersArray = null;
 
     private String selectedCourseName = null;
     private String selectedTypeName = "1";
@@ -55,7 +55,7 @@ public class Index implements Serializable {
     private void init() {
         try {
             resultList = SqlUtils.executeSqlQuery(LIST_ALL_COURSES_SQL);
-            getCourseClasses();
+            getCourseClassesTeachers();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,25 +71,6 @@ public class Index implements Serializable {
             }
         }
         return courseList;
-    }
-
-    public Map<String, String> getCourseClasses() {
-        if (courseClasses == null) {
-
-            courseClasses = new HashMap<String, String>();
-
-            for (Map<String, Object> column
-                    : resultList) {
-
-                courseClasses.put(
-                        String.valueOf(column.get("courseName")),
-                        String.valueOf(column.get("classNumbers"))
-                );
-
-            }
-        }
-
-        return courseClasses;
     }
 
 
@@ -109,14 +90,14 @@ public class Index implements Serializable {
     }
 
 
-    public String getCourseClassJsonObject() {
-        if (courseClassJsonArray == null) {
-            getCourseClasses();
+    public String getCourseJsonObjectContainClassesTeachersArray() {
+        if (courseJsonObjectContainClassesTeachersArray == null) {
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-            courseClassJsonArray = gson.toJson(courseClasses);
+            courseJsonObjectContainClassesTeachersArray = gson.toJson(
+                    courseClassesTeachers, new TypeToken<Map<String, Map<String, String>>>(){}.getType());
         }
 
-        return courseClassJsonArray;
+        return courseJsonObjectContainClassesTeachersArray;
     }
 
     public String getSelectedCourseName() {
@@ -133,5 +114,23 @@ public class Index implements Serializable {
 
     public void setSelectedTypeName(String selectedTypeName) {
         this.selectedTypeName = selectedTypeName;
+    }
+
+    private Map<String, Map<String, String>> getCourseClassesTeachers() {
+        if (courseClassesTeachers == null) {
+            courseClassesTeachers = new HashMap<String, Map<String, String>>();
+
+            for (Map<String, Object> column
+                    : resultList) {
+
+                Map<String, String> classesTeacher = new HashMap<String, String>();
+                classesTeacher.put("classes", String.valueOf(column.get("classNumbers")));
+                classesTeacher.put("teachers", String.valueOf(column.get("teachers")));
+
+                courseClassesTeachers.put(String.valueOf(column.get("id")), classesTeacher);
+            }
+        }
+
+        return courseClassesTeachers;
     }
 }

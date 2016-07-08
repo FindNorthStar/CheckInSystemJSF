@@ -95,7 +95,7 @@
                             <div class="col-sm-9">
                                 <h:selectOneMenu styleClass="course_select form-control"
                                                  value="#{backend_index.selectedCourseName}">
-                                    <f:selectItems value="#{backend_index.courseList}" />
+                                    <f:selectItems value="#{backend_index.courseList}"/>
                                 </h:selectOneMenu>
                             </div>
                         </div>
@@ -103,16 +103,24 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">班级</label>
                             <div class="col-sm-9 left">
-                                <p id="classes_names" class="form-control-static">这里是班级列表</p>
+                                <p id="classes-names" class="form-control-static">这里是班级列表</p>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">教师</label>
+                            <div class="col-sm-9 left">
+                                <p id="teachers-name" class="form-control-static">这里是老师列表</p>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">签到类型</label>
                             <div class="col-sm-9 left">
                                 <div id="type_group" class="btn-group" data-toggle="buttons">
                                     <h:selectOneRadio value="#{backend_index.selectedTypeName}">
-                                        <f:selectItems value="#{backend_index.typeList}" />
+                                        <f:selectItems value="#{backend_index.typeList}"/>
                                     </h:selectOneRadio>
                                 </div>
                             </div>
@@ -153,11 +161,14 @@
 
     <h:outputScript>
         function change_class() {
-            var course = $(".course_select").find(":selected").text();
-            var json = #{backend_index.courseClassJsonObject};
-            var classes = json[course];
-            $("#classes_names").text(classes);
+            var courseId = $(".course_select").find(":selected").val();
+            var json = #{backend_index.courseJsonObjectContainClassesTeachersArray};
+            var classes = json[courseId]["classes"];
+            var teachers = json[courseId]["teachers"];
+            $("#classes-names").text(classes);
+            $("#teachers-name").text(teachers);
         }
+
         $(document).ready(function() {
             change_class();
 
@@ -167,6 +178,7 @@
                 $(this).find('label').addClass("btn btn-default");
                 $(this).find('label').detach().appendTo($("#type_group"));
             });
+
             $("#type_group table").remove();
             $("#type_group label:first-child").addClass("active");
 
