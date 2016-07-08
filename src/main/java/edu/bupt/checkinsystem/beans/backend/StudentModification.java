@@ -44,15 +44,23 @@ public class StudentModification {
     private String selectedClassId;
     private String macAddress;
 
-
-
+    @Language("MySQL")
+    private static final String GET_STUDENT_INFO_SQL = "SELECT studentName, studentNo, macAddress, classId FROM student WHERE id = ?";
     @PostConstruct
     private void init() {
         try {
             getClassesList();
             classId = Faces.getRequestParameter("classId");
             studentId = Faces.getRequestParameter("studentId");
-            selectedClassId = Faces.getRequestParameter("classId");
+            Map<Integer, Object> map = new HashMap<Integer, Object>();
+            map.put(1, Integer.valueOf(studentId));
+            List<Map<String, Object>> results = SqlUtils.executeSqlQuery(GET_STUDENT_INFO_SQL, map);
+            Map<String, Object> result = results.get(0);
+
+            selectedClassId = String.valueOf(result.get("classId"));
+            macAddress = (String) result.get("macAddress");
+            studentName = (String) result.get("studentName");
+            studentNumber = (String) result.get("studentNo");
         } catch (Exception e) {
             e.printStackTrace();
         }
