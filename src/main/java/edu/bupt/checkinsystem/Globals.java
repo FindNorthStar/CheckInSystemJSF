@@ -9,4 +9,6 @@ package edu.bupt.checkinsystem;
  */
 public class Globals {
     public static int currentEventId = 1;  // FIXME: 1 is the test value.
+
+    public static boolean isBackendIndexSelectDisable = false;
 }

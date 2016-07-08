@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
@@ -126,8 +126,8 @@
                             </div>
                         </div>
 
-                        <h:commandButton onclick="change_form_state()" id="submit_btn" class="btn btn-primary start-btn"
-                                         type="submit" value="开始"/>
+                        <h:commandButton actionListener="#{backend_index.submit()}"
+                                         styleClass="btn btn-primary start-btn" type="submit" value="开始" />
                     </h:form>
                 </div>
             </div>
@@ -142,24 +142,27 @@
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
     <script>
-        function change_form_state() {
-            var submit_btn = $("#submit_btn");
 
-            if (submit_btn.text().trim() == "开始") {
+    </script>
+
+    <h:outputScript>
+        var disabled = #{backend_index.backendIndexDisable};
+
+        function check_state() {
+            var submit_btn = $(".start-btn");
+
+            if (disabled) {
                 $("select").prop("disabled", true);
                 $("label").addClass("disabled");
-                submit_btn.text("结束");
+                submit_btn.val("结束");
             }
             else {
                 $("select").prop("disabled", false);
                 $("label").removeClass("disabled");
-
-                submit_btn.text("开始");
+                submit_btn.val("开始");
             }
         }
-    </script>
 
-    <h:outputScript>
         function change_class() {
             var courseId = $(".course_select").find(":selected").val();
             var json = #{backend_index.courseJsonObjectContainClassesTeachersObject};
@@ -170,6 +173,7 @@
         }
 
         $(document).ready(function() {
+            check_state();
             change_class();
 
             $("select").attr("size", null);

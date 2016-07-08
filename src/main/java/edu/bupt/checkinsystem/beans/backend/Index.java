@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import edu.bupt.checkinsystem.Globals;
 import edu.bupt.checkinsystem.util.SqlUtils;
 
 import javax.annotation.PostConstruct;
@@ -59,6 +60,14 @@ public class Index implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void submit() {
+        // The submit button action listener
+
+        changeBackendIndexDisable();
+        insertEventId();
     }
 
 
@@ -132,5 +141,17 @@ public class Index implements Serializable {
         }
 
         return courseClassesTeachers;
+    }
+
+    public boolean isBackendIndexDisable() {
+        return Globals.isBackendIndexSelectDisable;
+    }
+
+    private void changeBackendIndexDisable() {
+        Globals.isBackendIndexSelectDisable = !Globals.isBackendIndexSelectDisable;
+    }
+
+    private void insertEventId() {
+        // TODO: 16/7/8 Insert Event Id
     }
 }
