@@ -1,5 +1,6 @@
 package edu.bupt.checkinsystem.beans.backend;
 
+import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
@@ -51,10 +52,10 @@ public class StudentModification {
             getClassesList();
             classId = Faces.getRequestParameter("classId");
             studentId = Faces.getRequestParameter("studentId");
+            selectedClassId = Faces.getRequestParameter("classId");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -102,7 +103,7 @@ public class StudentModification {
     }
 
     public void setMacAddress(String macAddress) {
-        this.macAddress = macAddress;
+        this.macAddress = NetUtils.stripMacAddress(macAddress);
     }
 
 

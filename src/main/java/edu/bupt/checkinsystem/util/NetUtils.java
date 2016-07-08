@@ -36,4 +36,8 @@ public class NetUtils {
         map.put("127.0.0.1", "EEEEEFFEEEEE");
         return map;
     }
+
+    public static String stripMacAddress(String macAddr) {
+        return macAddr.toUpperCase().replaceAll("[^A-F0-9]", "");
+    }
 }
