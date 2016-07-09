@@ -19,7 +19,7 @@
     <!-- Hack for IE 10 -->
     <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"/>
 
-    <style type="text/css">
+    <h:outputStylesheet>
         .top {
             margin-top: 8%;
         }
@@ -45,7 +45,11 @@
         .table-title {
             margin-bottom: 1%;
         }
-    </style>
+
+        .mac-address {
+            font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", monospace;
+        }
+    </h:outputStylesheet>
 </h:head>
 
 <h:body>
@@ -118,7 +122,7 @@
                 <tr>
                     <td>#{student.get("studentNo")}</td>
                     <td>#{student.get("studentName")}</td>
-                    <td>#{student.get("macAddress")}</td>
+                    <td class="mac-address">#{student.get("macAddress")}</td>
                     <td>
                         <a href='/backend/student-history?studentId=#{student.get("id")}'>
                             签到记录

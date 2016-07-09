@@ -19,7 +19,7 @@
     <!-- Hack for IE 10 -->
     <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"/>
 
-    <style type="text/css">
+    <h:outputStylesheet>
         body {
             padding-top: 50px;
         }
@@ -58,7 +58,11 @@
         .checkbox-ml {
             margin-left: 9.133333%;
         }
-    </style>
+
+        .mac-address {
+            font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", monospace;
+        }
+    </h:outputStylesheet>
 </h:head>
 
 <h:body>
@@ -122,7 +126,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">MAC 地址</label>
                         <div class="col-sm-9">
-                            <h:inputText styleClass="form-control" value="#{backend_student_modification.macAddress}" p:placeholder="AABBCCDDEEFF"/>
+                            <h:inputText styleClass="form-control mac-address" value="#{backend_student_modification.macAddress}" p:placeholder="AABBCCDDEEFF"/>
                         </div>
                     </div>
 
