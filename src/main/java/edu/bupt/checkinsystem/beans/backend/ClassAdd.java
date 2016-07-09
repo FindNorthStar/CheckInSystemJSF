@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 16/7/8 20:57
  */
 
-@ManagedBean(name = "class_add")
+@ManagedBean(name = "backend_class_add")
 @RequestScoped
 public class ClassAdd {
     // TODO: 16/7/8 Need to check empty value and redirect

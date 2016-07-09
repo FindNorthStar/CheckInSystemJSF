@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@ManagedBean(name = "classes")
+@ManagedBean(name = "backend_classes")
 @RequestScoped
 public class Classes implements Serializable {
 

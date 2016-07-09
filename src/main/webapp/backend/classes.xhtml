@@ -68,7 +68,7 @@
         <div class="container-head">
             <h:form styleClass="form-horizontal">
                 <div class="btn-group" role="group" aria-label="...">
-                    <h:commandButton actionListener="#{classes.redirectToClassAdd}" styleClass="btn btn-default" value="增加"/>
+                    <h:commandButton actionListener="#{backend_classes.redirectToClassAdd}" styleClass="btn btn-default" value="增加"/>
                     <h:commandButton styleClass="btn btn-default" value="导入 Excel"/>
                 </div>
             </h:form>
@@ -90,7 +90,7 @@
 
                     <tbody>
 
-                    <ui:repeat var="class" value="#{classes.classes}">
+                    <ui:repeat var="class" value="#{backend_classes.classes}">
                         <tr>
                             <td scope="row">
                                 <span>#{class.get("classNo")}</span>
