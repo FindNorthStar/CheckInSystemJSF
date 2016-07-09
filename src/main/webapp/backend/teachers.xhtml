@@ -89,10 +89,10 @@
                         <td>#{teacher.get("username")}</td>
                         <td>#{teacher.get("teacherName")}</td>
                         <td>
-                            <a href="#">
+                            <a href="teacher-modification?teacherId=${teacher.get('id')}">
                                 修改
                             </a>
-                            <a href="#">
+                            <a href="teacher-delete?teacherId=${teacher.get('id')}">
                                 删除
                             </a>
                         </td>
@@ -111,5 +111,17 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript><![CDATA[
+        $(document).ready(function() {
+            var referer = document.referrer;
+            if (referer.indexOf("teacher-add") > -1) {
+                $('<div class="alert alert-success" role="alert">教师已添加。</div>').insertAfter("h1");
+            } else if (referer.indexOf("teacher-modification") > -1) {
+                $('<div class="alert alert-warning" role="alert">教师信息已更改, 将在该用户下次登录生效。</div>').insertAfter("h1");
+            } else if (referer.indexOf("teacher-delete") > -1) {
+                $('<div class="alert alert-warning" role="alert">教师已删除, 该用户将不可再次登录。</div>').insertAfter("h1");
+            }
+        });
+    ]]></h:outputScript>
 </h:body>
 </html>
