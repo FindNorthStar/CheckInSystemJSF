@@ -113,12 +113,12 @@
     <h:outputScript library="js" name="authenication.js" />
     <h:outputScript>//<![CDATA[
         $(document).ready(function() {
-            var referer = document.referrer;
-            if (referer.indexOf("teacher-add") > -1) {
+            var hash = window.location.hash;
+            if (hash === "#added") {
                 $('<div class="alert alert-success" role="alert">教师已添加。</div>').insertAfter("h1");
-            } else if (referer.indexOf("teacher-modification") > -1) {
+            } else if (hash === "#modified") {
                 $('<div class="alert alert-warning" role="alert">教师信息已更改, 将在该用户下次登录生效。</div>').insertAfter("h1");
-            } else if (referer.indexOf("teacher-delete") > -1) {
+            } else if (hash === "#deleted") {
                 $('<div class="alert alert-warning" role="alert">教师已删除, 该用户将不可再次登录。</div>').insertAfter("h1");
             }
         });

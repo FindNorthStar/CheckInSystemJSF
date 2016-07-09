@@ -62,7 +62,7 @@ public class TeacherModification {
             SqlUtils.executeSqlUpdate(UPDATE_TEACHER_HASH_SQL, hashParam);
         }
 
-        Faces.redirect("/backend/teachers");
+        Faces.redirect("/backend/teachers#modified");
     }
 
     public String getUsername() {

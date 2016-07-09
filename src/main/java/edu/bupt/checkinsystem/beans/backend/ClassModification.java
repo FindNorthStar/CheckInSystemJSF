@@ -50,7 +50,7 @@ public class ClassModification {
         param.put(2, classId);
 
         SqlUtils.executeSqlUpdate(UPDATE_CLASS_SQL, param);
-        Faces.redirect("/backend/classes");
+        Faces.redirect("/backend/classes#modified");
     }
 
     public String getClassNo() {

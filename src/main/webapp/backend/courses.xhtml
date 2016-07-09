@@ -75,6 +75,7 @@
 
             <div class="table-top">
 
+                <div id="empty-for-status"/>
                 <table class="table table-hover">
 
                     <thead>
@@ -116,7 +117,19 @@
     <h:outputScript library="js" name="speed-up.js"/>
     <h:outputScript library="js" name="bootstrap.js"/>
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
-    <h:outputScript library="js" name="jquery-cookie.js"/>
-    <h:outputScript library="js" name="authenication.js"/>
+    <h:outputScript library="js" name="jquery-cookie.js" />
+    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript>//<![CDATA[
+        $(document).ready(function() {
+            var hash = window.location.hash;
+            if (hash === "#added") {
+                $('<div class="alert alert-success" role="alert">课程已添加。</div>').insertAfter("#empty-for-status");
+            } else if (hash === "#modified") {
+                $('<div class="alert alert-success" role="alert">课程信息已更改。</div>').insertAfter("#empty-for-status");
+            } else if (hash === "#deleted") {
+                $('<div class="alert alert-success" role="alert">课程已删除</div>').insertAfter("#empty-for-status");
+            }
+        });
+    //]]></h:outputScript>
 </h:body>
 </html>

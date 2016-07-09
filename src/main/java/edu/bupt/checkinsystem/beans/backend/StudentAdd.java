@@ -47,7 +47,7 @@ public class StudentAdd {
         param.put(3, studentName);
 
         SqlUtils.executeSqlUpdate(INSERT_STUDENT_SQL, param);
-        Faces.redirect("/backend/student-management?classId=" + classId);
+        Faces.redirect("/backend/student-management?classId=" + classId + "#added");
     }
 
 

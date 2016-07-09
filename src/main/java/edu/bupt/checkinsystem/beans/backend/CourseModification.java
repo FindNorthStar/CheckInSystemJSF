@@ -138,6 +138,6 @@ public class CourseModification implements Serializable {
 
         SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
         SqlUtils.executeSqlUpdate(DELETE_REL_SQL, deleteMapList);
-        Faces.redirect("/backend/courses");
+        Faces.redirect("/backend/courses#modified");
     }
 }

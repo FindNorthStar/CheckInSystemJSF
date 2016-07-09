@@ -34,7 +34,7 @@ public class TeacherAdd {
         param.put(3, teacherName);
         SqlUtils.executeSqlUpdate(INSERT_TEACHER_SQL, param);
 
-        Faces.redirect("/backend/teachers");
+        Faces.redirect("/backend/teachers#added");
     }
 
     public String getUsername() {

@@ -78,7 +78,7 @@ public class StudentModification {
 
         SqlUtils.executeSqlUpdate(UPDATE_STUDENT_SQL, param);
 
-        Faces.redirect("/backend/student-management?classId=" + classId);
+        Faces.redirect("/backend/student-management?classId=" + classId + "#modified");
     }
 
 

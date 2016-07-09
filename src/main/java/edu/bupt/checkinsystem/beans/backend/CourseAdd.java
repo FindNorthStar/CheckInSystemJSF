@@ -79,7 +79,7 @@ public class CourseAdd {
         }
 
         SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
-        Faces.redirect("/backend/courses");
+        Faces.redirect("/backend/courses#added");
     }
 
 

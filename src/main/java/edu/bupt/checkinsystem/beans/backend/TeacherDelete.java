@@ -38,6 +38,6 @@ public class TeacherDelete {
 
         SqlUtils.executeSqlUpdate(DELETE_TEACHER_SQL, param);
 
-        Faces.redirect("/backend/teachers");
+        Faces.redirect("/backend/teachers#deleted");
     }
 }

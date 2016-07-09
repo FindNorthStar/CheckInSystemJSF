@@ -40,6 +40,6 @@ public class StudentDelete {
 
         SqlUtils.executeSqlUpdate(DELETE_STUDENT_SQL, param);
 
-        Faces.redirect("/backend/student-management?classId=" + classId);
+        Faces.redirect("/backend/student-management?classId=" + classId + "#deleted");
     }
 }

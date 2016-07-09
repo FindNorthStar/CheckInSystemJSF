@@ -149,12 +149,12 @@
     <h:outputScript library="js" name="authenication.js"/>
     <h:outputScript>//<![CDATA[
         $(document).ready(function() {
-            var referer = document.referrer;
-            if (referer.indexOf("student-add") > -1) {
+            var hash = window.location.hash;
+            if (hash === "#added") {
                 $('<div class="alert alert-success" role="alert">学生已添加。</div>').insertAfter(".brief-margin");
-            } else if (referer.indexOf("student-modification") > -1) {
+            } else if (hash === "#modified") {
                 $('<div class="alert alert-success" role="alert">学生信息已更改。</div>').insertAfter(".brief-margin");
-            } else if (referer.indexOf("student-delete") > -1) {
+            } else if (hash === "#deleted") {
                 $('<div class="alert alert-success" role="alert">学生已删除</div>').insertAfter(".brief-margin");
             }
         });

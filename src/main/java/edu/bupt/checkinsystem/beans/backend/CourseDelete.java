@@ -36,6 +36,6 @@ public class CourseDelete {
         param.put(1, Integer.valueOf(courseId));
         SqlUtils.executeSqlUpdate(DELETE_COURSE_SQL, param);
 
-        Faces.redirect("/backend/courses");
+        Faces.redirect("/backend/courses#deleted");
     }
 }

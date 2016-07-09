@@ -127,12 +127,12 @@
     <h:outputScript library="js" name="authenication.js"/>
     <h:outputScript>//<![CDATA[
         $(document).ready(function() {
-            var referer = document.referrer;
-            if (referer.indexOf("class-add") > -1) {
+            var hash = window.location.hash;
+            if (hash === "#added") {
                 $('<div class="alert alert-success" role="alert">班级已添加。</div>').insertAfter("#empty-for-status");
-            } else if (referer.indexOf("class-modification") > -1) {
+            } else if (hash === "#modified") {
                 $('<div class="alert alert-success" role="alert">班级信息已更改。</div>').insertAfter("#empty-for-status");
-            } else if (referer.indexOf("class-delete") > -1) {
+            } else if (hash === "#deleted") {
                 $('<div class="alert alert-success" role="alert">班级已删除</div>').insertAfter("#empty-for-status");
             }
         });

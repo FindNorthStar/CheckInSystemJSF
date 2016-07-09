@@ -33,7 +33,7 @@ public class ClassAdd {
         param.put(1, classNumber);
 
         SqlUtils.executeSqlUpdate(INSERT_CLASS_SQL, param);
-        Faces.redirect("/backend/classes");
+        Faces.redirect("/backend/classes#added");
     }
 
 
