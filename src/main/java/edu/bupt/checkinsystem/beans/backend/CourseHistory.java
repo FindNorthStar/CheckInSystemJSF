@@ -9,10 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -51,14 +48,18 @@ public class CourseHistory implements Serializable {
 
     public String getStartDate() {
         startDate = Faces.getRequestParameter("start");
-        if (startDate == null || startDate.equals(""))
-            startDate = "1970-01-01";
+        if (startDate == null || startDate.equals("") || startDate.equals("0")) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.YEAR, -1);
+            startDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        }
         return startDate;
     }
 
     public String getEndDate() {
         endDate = Faces.getRequestParameter("end");
-        if (endDate == null || endDate.equals("")) {
+        if (endDate == null || endDate.equals("") || endDate.equals("0")) {
             endDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         }
         return endDate;
