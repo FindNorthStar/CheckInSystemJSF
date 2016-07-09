@@ -63,37 +63,58 @@
             <h1>#{backend_course_history.courseName} 签到历史</h1>
         </div>
         <div style="padding-bottom: 20px;">
-            <form class="form-inline">
-                <span>时间: </span>
-                <div class="input-daterange input-group" id="datepicker" style="width: 400px">
-                    <input type="text" class="input-sm form-control" name="start" />
-                    <span class="input-group-addon">至</span>
-                    <input type="text" class="input-sm form-control" name="end" />
-                </div>
-                <div class="input-group">
-                    <select class="form-control" id="view-by">
-                        <option value="by-person">按人查看</option>
-                        <option value="by-event">按事件查看</option>
-                    </select>
+            <form method="get" class="form-inline">
+                <input type="hidden" name="courseId" value="#{backend_course_history.courseId}"/>
+                <div class="row">
+                    <div class="col-md-5">
+                        <span>时间: </span>
+                        <div class="input-daterange input-group" id="datepicker" style="width: 400px">
+                            <input type="text" class="input-sm form-control" name="start" />
+                            <span class="input-group-addon">至</span>
+                            <input type="text" class="input-sm form-control" name="end" />
+                        </div>
+                    </div><!--
+                    <div class="input-group">
+                        <select class="form-control" id="view-by">
+                            <option value="by-person">按人查看</option>
+                            <option value="by-event">按事件查看</option>
+                        </select>
+                    </div>-->
+                    <div class="col-md-1">
+                        <button class="btn btn-default query-button" type="submit">查询</button>
+                    </div>
+                    <div class="col-md-3 col-md-offset-3">
+                        <span>查看方式: </span>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="by-what" id="select-by-person" value="by-person" autocomplete="off" checked="checked" />按人查看
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="by-what" id="select-by-event" value="by-event" autocomplete="off" />按事件查看
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
-        <div id="statistics">
-            <p>
-                班级:
+
+        <div class="alert alert-info statistical-one-line" role="alert">
+            <span class="col-sm-offset-0">
+            <span>上课班级:</span>
                 <ui:repeat var="clazz" value="#{backend_course_history.classList}" >
                     <span>#{clazz.get("classNo")}</span>
                 </ui:repeat>
-            </p>
-            <p>
-                总应签到次数:
-                #{backend_course_history.totalEventCount}
-            </p>
-            <p>
-                总人数:
-                #{backend_course_history.totalStudentCount}
-            </p>
+            </span>
+
+            <span class="col-sm-offset-1">
+                <span>总应签到次数: </span><span class="statistical-ml" id="totalEventCount">#{backend_course_history.totalEventCount}</span>
+            </span>
+
+            <span class="col-sm-offset-1">
+                <span>总人数: </span><span class="statistical-ml" id="totalPersonCount">#{backend_course_history.totalStudentCount}</span>
+            </span>
         </div>
+
         <div id="by-person">
             <table class="table table-striped sortable">
                 <thead>
@@ -107,11 +128,11 @@
                 </thead>
                 <tbody>
                 <ui:repeat var="student" value="#{backend_course_history.studentList}" >
-                    <tr>
+                    <tr class="table-by-person">
                         <td>#{student.get("studentNo")}</td>
                         <td>#{student.get("studentName")}</td>
-                        <td>#{student.get("checkInCount")}</td>
-                        <td> </td>
+                        <td class="checkedInEventCount">#{student.get("checkInCount")}</td>
+                        <td class="absentEventCount"/>
                         <td><a href='/backend/student-history?studentId=#{student.get("id")}&amp;start=#{backend_course_history.startDate}&amp;end=#{backend_course_history.endDate}&amp;courseId=#{backend_course_history.courseId}'>查看详情</a></td>
                     </tr>
                 </ui:repeat>
@@ -131,11 +152,11 @@
                 </thead>
                 <tbody>
                 <ui:repeat var="event" value="#{backend_course_history.eventList}" >
-                    <tr>
+                    <tr class="table-by-event">
                         <td>#{event.get("startDateTime")}</td>
                         <td>#{event.get("typeName")}</td>
-                        <td>#{event.get("checkInCount")}</td>
-                        <td> </td>
+                        <td class="checkedInPersonCount">#{event.get("checkInCount")}</td>
+                        <td class="absentPersonCount"/>
                         <td><a href='/backend/event-detail?eventId=#{event.get("id")}'>查看详情</a></td>
                     </tr>
                 </ui:repeat>
@@ -153,22 +174,31 @@
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
     <h:outputScript>//<![CDATA[
-        $('.input-daterange').datepicker({
-            maxViewMode: 2,
-            todayBtn: "linked",
-            format: "yyyy-mm-dd",
-            todayHighlight: true
-        });
-        $("#view-by").change(function() {
-            var by_what = $("#view-by").val()
-            if (by_what === "by-person") {
+        $(document).ready(function() {
+            $('.input-daterange').datepicker({
+                maxViewMode: 2,
+                todayBtn: "linked",
+                format: "yyyy-mm-dd",
+                todayHighlight: true
+            });
+            var totalEventCount = parseInt($("#totalEventCount").text());
+            var totalPersonCount = parseInt($("#totalPersonCount").text());
+            $('.table-by-person').each(function(e) {
+                $(this).find(".absentEventCount").text((totalEventCount - parseInt($(this).find(".checkedInEventCount").text())).toString());
+            });
+            $('.table-by-event').each(function(e) {
+                $(this).find(".absentPersonCount").text((totalPersonCount - parseInt($(this).find(".checkedInPersonCount").text())).toString());
+            });
+
+            $("#select-by-person").change(function() {
                 $("#by-event").hide();
                 $("#by-person").show();
-            }
-            if (by_what === "by-event") {
+            });
+
+            $("#select-by-event").change(function() {
                 $("#by-person").hide();
                 $("#by-event").show();
-            }
+            });
         });
     //]]></h:outputScript>
 </h:body>
