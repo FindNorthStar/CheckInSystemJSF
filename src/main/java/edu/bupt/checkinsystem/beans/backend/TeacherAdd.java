@@ -3,6 +3,7 @@ package edu.bupt.checkinsystem.beans.backend;
 import edu.bupt.checkinsystem.util.PasswordUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
 import org.intellij.lang.annotations.Language;
+import org.omnifaces.util.Faces;
 
 import javax.faces.bean.ManagedBean;
 import java.util.HashMap;
@@ -20,28 +21,28 @@ import java.util.Map;
 public class TeacherAdd {
 
     @Language("MySQL")
-    private static final String INSERT_TEACHER_SQL =
-            "INSERT INTO tacher (username, hash, teacherName) VALUES (?, ?, ?)";
+    private static final String INSERT_TEACHER_SQL = "INSERT INTO teacher (username, hash, teacherName) VALUES (?, ?, ?)";
 
-    private String userName;
+    private String username;
     private String teacherName;
     private String password;
 
     public void submit() throws Exception {
         Map<Integer, Object> param = new HashMap<Integer, Object>();
-        param.put(1, userName);
+        param.put(1, username);
         param.put(2, PasswordUtils.generateHash(password));
         param.put(3, teacherName);
-
         SqlUtils.executeSqlUpdate(INSERT_TEACHER_SQL, param);
+
+        Faces.redirect("/backend/teachers");
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getTeacherName() {
