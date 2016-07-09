@@ -195,10 +195,14 @@
             var totalEventCount = parseInt($("#totalEventCount").text());
             var totalPersonCount = parseInt($("#totalPersonCount").text());
             $('.table-by-person').each(function(e) {
-                $(this).find(".absentEventCount").text((totalEventCount - parseInt($(this).find(".checkedInEventCount").text())).toString());
+                var absentEventCount = totalEventCount - parseInt($(this).find(".checkedInEventCount").text());
+                $(this).find(".absentEventCount").text(absentEventCount.toString());
+                $(this).find(".absentEventCount").attr("data-value", absentEventCount);
             });
             $('.table-by-event').each(function(e) {
-                $(this).find(".absentPersonCount").text((totalPersonCount - parseInt($(this).find(".checkedInPersonCount").text())).toString());
+                var absentPersonCount = totalPersonCount - parseInt($(this).find(".checkedInPersonCount").text());
+                $(this).find(".absentPersonCount").text(absentPersonCount.toString());
+                $(this).find(".absentPersonCount").attr("data-value", absentPersonCount);
             });
 
             $("#select-by-person").change(function() {
