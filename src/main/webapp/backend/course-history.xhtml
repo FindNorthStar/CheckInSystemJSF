@@ -183,6 +183,7 @@
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
     <h:outputScript library="js" name="jquery-urlparam.js" />
+    <h:outputScript library="js" name="date-naive-format.js" />
     <h:outputScript>//<![CDATA[
         $(document).ready(function() {
             $('.input-daterange').datepicker({
@@ -210,8 +211,10 @@
                 $("#by-event").show();
             });
 
-            $("#date-start").val($.urlParam("start"));
-            $("#date-end").val($.urlParam("end"));
+            var startDate = $.urlParam("start") || $.getLastYearString();
+            var endDate = $.urlParam("end") || $.getTodayString();
+            $("#date-start").val(startDate);
+            $("#date-end").val(endDate);
         });
     //]]></h:outputScript>
 </h:body>
