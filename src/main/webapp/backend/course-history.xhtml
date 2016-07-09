@@ -126,6 +126,7 @@
                     <th>类型</th>
                     <th>签到人数</th>
                     <th>缺到人数</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -135,6 +136,7 @@
                         <td>#{event.get("typeName")}</td>
                         <td>#{event.get("checkInCount")}</td>
                         <td> </td>
+                        <td><a href='/backend/event-detail?eventId=#{event.get("id")}'>查看详情</a></td>
                     </tr>
                 </ui:repeat>
                 </tbody>
