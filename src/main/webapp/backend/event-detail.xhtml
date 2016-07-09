@@ -92,7 +92,7 @@
                     <td>#{student.get("studentName")}</td>
                     <td class="event-status">#{student.get("checkDateTime")}</td>
                     <td class="event-operations">
-                        <a href="#">补签</a>
+                        <a href='/backend/buqian?studentId=#{student.get("id")}&amp;eventId=#{backend_event_detail.eventId}'>补签</a>
                         <a href="#">申诉</a>
                     </td>
                 </tr>

@@ -42,6 +42,10 @@ public class EventDetail implements Serializable {
         }
     }
 
+    public Integer getEventId() {
+        return eventId;
+    }
+
     @Language("MySQL")
     private static final String GET_COURSE_NAME_SQL = "SELECT course.courseName FROM course, event " +
             "WHERE course.id = event.courseId AND event.id = ?";

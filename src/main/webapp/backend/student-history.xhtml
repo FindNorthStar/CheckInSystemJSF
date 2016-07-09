@@ -109,7 +109,10 @@
                     <td>#{event.get("courseName")}</td>
                     <td>#{event.get("typeName")}</td>
                     <td class="event-status">#{event.get("checkInTime")}</td>
-                    <td class="event-operations"><a href="#">补签</a> <a href="#">申诉</a></td>
+                    <td class="event-operations">
+                        <a href='/backend/buqian?studentId=#{backend_student_history.studentId}&amp;eventId=#{event.get("eventId")}'>补签</a>
+                        <a href="#">申诉</a>
+                    </td>
                 </tr>
             </ui:repeat>
 
