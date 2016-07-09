@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.PasswordUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -29,6 +30,7 @@ public class TeacherModification {
 
     @Language("MySQL")
     private static final String GET_TEACHER_INFO_SQL = "SELECT username, teacherName FROM teacher WHERE id = ?";
+
     @PostConstruct
     private void init() {
         try {
@@ -47,22 +49,32 @@ public class TeacherModification {
 
     @Language("MySQL")
     private static final String UPDATE_TEACHER_BASIC_INFO_SQL = "UPDATE teacher SET username = ?, teacherName = ? WHERE id = ?";
+
     @Language("MySQL")
     private static final String UPDATE_TEACHER_HASH_SQL = "UPDATE teacher SET hash = ? WHERE id = ?";
-    public void submit() throws Exception {
-        Map<Integer, Object> basicParam = new HashMap<Integer, Object>();
-        basicParam.put(1, username);
-        basicParam.put(2, teacherName);
-        basicParam.put(3, Integer.valueOf(teacherId));
-        SqlUtils.executeSqlUpdate(UPDATE_TEACHER_BASIC_INFO_SQL, basicParam);
-        if (!password.isEmpty()) {
-            Map<Integer, Object> hashParam = new HashMap<Integer, Object>();
-            hashParam.put(1, PasswordUtils.generateHash(password));
-            hashParam.put(2, Integer.valueOf(teacherId));
-            SqlUtils.executeSqlUpdate(UPDATE_TEACHER_HASH_SQL, hashParam);
-        }
 
-        Faces.redirect("/backend/teachers#modified");
+    public void submit() throws Exception {
+
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(teacherName)) {
+            Faces.redirect("/backend/teachers#emptyError");
+        } else {
+            Map<Integer, Object> basicParam = new HashMap<Integer, Object>();
+
+            basicParam.put(1, username);
+            basicParam.put(2, teacherName);
+            basicParam.put(3, Integer.valueOf(teacherId));
+
+            SqlUtils.executeSqlUpdate(UPDATE_TEACHER_BASIC_INFO_SQL, basicParam);
+
+            if (!password.isEmpty()) {
+                Map<Integer, Object> hashParam = new HashMap<Integer, Object>();
+                hashParam.put(1, PasswordUtils.generateHash(password));
+                hashParam.put(2, Integer.valueOf(teacherId));
+                SqlUtils.executeSqlUpdate(UPDATE_TEACHER_HASH_SQL, hashParam);
+            }
+
+            Faces.redirect("/backend/teachers#modified");
+        }
     }
 
     public String getUsername() {

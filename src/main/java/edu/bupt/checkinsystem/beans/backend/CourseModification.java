@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -80,7 +81,7 @@ public class CourseModification implements Serializable {
 
 
     @Language("MySQL")
-    private static final String GET_COURSE_CLASSES_SQL = "SELECT classId from courseClass WHERE courseId = ?";
+    private static final String GET_COURSE_CLASSES_SQL = "SELECT classId FROM courseClass WHERE courseId = ?";
 
     public List<String> getSelectedClasses() throws Exception {
         if (selectedClasses == null) {
@@ -116,28 +117,34 @@ public class CourseModification implements Serializable {
     private static final String DELETE_REL_SQL = "DELETE IGNORE FROM courseClass WHERE courseId = ? AND classId = ?";
 
     public void submit() throws Exception {
-        Map<Integer, Object> courseMap = new HashMap<Integer, Object>();
-        courseMap.put(1, courseName);
-        courseMap.put(2, teachers);
-        courseMap.put(3, Integer.valueOf(courseId));
-        SqlUtils.executeSqlUpdate(UPDATE_COURSE_SQL, courseMap);
 
-        List<Map<Integer, Object>> insertMapList = new ArrayList<Map<Integer, Object>>();
-        List<Map<Integer, Object>> deleteMapList = new ArrayList<Map<Integer, Object>>();
+        if (TextUtils.isEmpty(courseName) || TextUtils.isEmpty(teachers)) {
+            Faces.redirect("/backend/courses#emptyError");
+        } else {
 
-        for (SelectItem clazz: classes) {
-            Map<Integer, Object> map = new HashMap<Integer, Object>();
-            map.put(1, Integer.valueOf(courseId));
-            map.put(2, clazz.getValue());
-            if (selectedClasses.contains(String.valueOf(clazz.getValue()))) {
-                insertMapList.add(map);
-            } else {
-                deleteMapList.add(map);
+            Map<Integer, Object> courseMap = new HashMap<Integer, Object>();
+            courseMap.put(1, courseName);
+            courseMap.put(2, teachers);
+            courseMap.put(3, Integer.valueOf(courseId));
+            SqlUtils.executeSqlUpdate(UPDATE_COURSE_SQL, courseMap);
+
+            List<Map<Integer, Object>> insertMapList = new ArrayList<Map<Integer, Object>>();
+            List<Map<Integer, Object>> deleteMapList = new ArrayList<Map<Integer, Object>>();
+
+            for (SelectItem clazz : classes) {
+                Map<Integer, Object> map = new HashMap<Integer, Object>();
+                map.put(1, Integer.valueOf(courseId));
+                map.put(2, clazz.getValue());
+                if (selectedClasses.contains(String.valueOf(clazz.getValue()))) {
+                    insertMapList.add(map);
+                } else {
+                    deleteMapList.add(map);
+                }
             }
-        }
 
-        SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
-        SqlUtils.executeSqlUpdate(DELETE_REL_SQL, deleteMapList);
-        Faces.redirect("/backend/courses#modified");
+            SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
+            SqlUtils.executeSqlUpdate(DELETE_REL_SQL, deleteMapList);
+            Faces.redirect("/backend/courses#modified");
+        }
     }
 }

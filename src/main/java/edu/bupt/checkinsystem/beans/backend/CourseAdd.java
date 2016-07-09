@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans.backend;
 
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -57,31 +58,35 @@ public class CourseAdd {
 
     public void submit() throws Exception {
 
-        // insert into course
-        Map<Integer, Object> courseMap = new HashMap<Integer, Object>();
-        courseMap.put(1, courseName);
-        courseMap.put(2, teachers);
-        List<Map<String, Object>> insertedCourseRow = SqlUtils.executeSqlInsertAndGetIt(INSERT_COURSE_SQL, courseMap);
+        if (TextUtils.isEmpty(courseName) || TextUtils.isEmpty(teachers)) {
+            Faces.redirect("/backend/courses#emptyError");
 
-        // get course id
-        BigInteger bigInteger = (BigInteger) insertedCourseRow.get(0).get("GENERATED_KEY");
-        Integer courseId = bigInteger.intValue();
+        } else {
+            // insert into course
+            Map<Integer, Object> courseMap = new HashMap<Integer, Object>();
+            courseMap.put(1, courseName);
+            courseMap.put(2, teachers);
+            List<Map<String, Object>> insertedCourseRow = SqlUtils.executeSqlInsertAndGetIt(INSERT_COURSE_SQL, courseMap);
 
-        List<Map<Integer, Object>> insertMapList = new ArrayList<Map<Integer, Object>>();
+            // get course id
+            BigInteger bigInteger = (BigInteger) insertedCourseRow.get(0).get("GENERATED_KEY");
+            Integer courseId = bigInteger.intValue();
 
-        for (SelectItem clazz : classes) {
-            Map<Integer, Object> map = new HashMap<Integer, Object>();
-            map.put(1, courseId);
-            map.put(2, clazz.getValue());
-            if (selectedClasses.contains(String.valueOf(clazz.getValue()))) {
-                insertMapList.add(map);
+            List<Map<Integer, Object>> insertMapList = new ArrayList<Map<Integer, Object>>();
+
+            for (SelectItem clazz : classes) {
+                Map<Integer, Object> map = new HashMap<Integer, Object>();
+                map.put(1, courseId);
+                map.put(2, clazz.getValue());
+                if (selectedClasses.contains(String.valueOf(clazz.getValue()))) {
+                    insertMapList.add(map);
+                }
             }
+
+            SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
+            Faces.redirect("/backend/courses#added");
         }
-
-        SqlUtils.executeSqlUpdate(INSERT_REL_SQL, insertMapList);
-        Faces.redirect("/backend/courses#added");
     }
-
 
     public List<String> getSelectedClasses() {
         if (selectedClasses == null) {

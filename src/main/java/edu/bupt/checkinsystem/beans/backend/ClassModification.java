@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -27,6 +28,7 @@ public class ClassModification {
 
     @Language("MySQL")
     private static final String GET_CLASS_INFO_SQL = "SELECT classNo FROM class WHERE id = ?";
+
     @PostConstruct
     private void init() {
         try {
@@ -44,13 +46,19 @@ public class ClassModification {
 
     @Language("MySQL")
     private static final String UPDATE_CLASS_SQL = "UPDATE class SET classNo = ? WHERE id = ?";
-    public void submit() throws Exception {
-        Map<Integer, Object> param = new HashMap<Integer, Object>();
-        param.put(1, classNo);
-        param.put(2, classId);
 
-        SqlUtils.executeSqlUpdate(UPDATE_CLASS_SQL, param);
-        Faces.redirect("/backend/classes#modified");
+    public void submit() throws Exception {
+
+        if (TextUtils.isEmpty(classNo)) {
+            Faces.redirect("/backend/classes#emptyError");
+        } else {
+            Map<Integer, Object> param = new HashMap<Integer, Object>();
+            param.put(1, classNo);
+            param.put(2, classId);
+
+            SqlUtils.executeSqlUpdate(UPDATE_CLASS_SQL, param);
+            Faces.redirect("/backend/classes#modified");
+        }
     }
 
     public String getClassNo() {

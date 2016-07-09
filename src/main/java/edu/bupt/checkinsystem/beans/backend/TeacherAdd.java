@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.PasswordUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -28,13 +29,18 @@ public class TeacherAdd {
     private String password;
 
     public void submit() throws Exception {
-        Map<Integer, Object> param = new HashMap<Integer, Object>();
-        param.put(1, username);
-        param.put(2, PasswordUtils.generateHash(password));
-        param.put(3, teacherName);
-        SqlUtils.executeSqlUpdate(INSERT_TEACHER_SQL, param);
 
-        Faces.redirect("/backend/teachers#added");
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(teacherName)) {
+            Faces.redirect("/backend/teachers#emptyError");
+        } else {
+            Map<Integer, Object> param = new HashMap<Integer, Object>();
+            param.put(1, username);
+            param.put(2, PasswordUtils.generateHash(password));
+            param.put(3, teacherName);
+            SqlUtils.executeSqlUpdate(INSERT_TEACHER_SQL, param);
+
+            Faces.redirect("/backend/teachers#added");
+        }
     }
 
     public String getUsername() {

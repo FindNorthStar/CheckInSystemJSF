@@ -1,6 +1,7 @@
 package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -41,13 +42,18 @@ public class StudentAdd {
     }
 
     public void submit() throws Exception {
-        Map<Integer, Object> param = new HashMap<Integer, Object>();
-        param.put(1, classId);
-        param.put(2, studentNumber);
-        param.put(3, studentName);
 
-        SqlUtils.executeSqlUpdate(INSERT_STUDENT_SQL, param);
-        Faces.redirect("/backend/student-management?classId=" + classId + "#added");
+        if (TextUtils.isEmpty(studentNumber) || TextUtils.isEmpty(studentName)) {
+            Faces.redirect("/backend/student-management?classId=" + classId + "#emptyError");
+        } else {
+            Map<Integer, Object> param = new HashMap<Integer, Object>();
+            param.put(1, classId);
+            param.put(2, studentNumber);
+            param.put(3, studentName);
+
+            SqlUtils.executeSqlUpdate(INSERT_STUDENT_SQL, param);
+            Faces.redirect("/backend/student-management?classId=" + classId + "#added");
+        }
     }
 
 
@@ -55,10 +61,15 @@ public class StudentAdd {
         Map<Integer, Object> map = new HashMap<Integer, Object>();
         map.put(1, classId);
         List<Map<String, Object>> result = SqlUtils.executeSqlQuery(LIST_CLASSNO_SQL, map);
-        classNo = (String) result.get(0).get("classNo");
+
+        if (!result.isEmpty()) {
+            classNo = (String) result.get(0).get("classNo");
+        } else {
+            classNo = "";
+        }
+
         return classNo;
     }
-
 
 
     public String getStudentNumber() {

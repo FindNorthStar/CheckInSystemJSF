@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans.backend;
 
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -46,6 +47,7 @@ public class StudentModification {
 
     @Language("MySQL")
     private static final String GET_STUDENT_INFO_SQL = "SELECT studentName, studentNo, macAddress, classId FROM student WHERE id = ?";
+
     @PostConstruct
     private void init() {
         try {
@@ -68,19 +70,23 @@ public class StudentModification {
 
 
     public void submit() throws Exception {
-        Map<Integer, Object> param = new HashMap<Integer, Object>();
 
-        param.put(1, selectedClassId);
-        param.put(2, studentNumber);
-        param.put(3, studentName);
-        param.put(4, macAddress);
-        param.put(5, studentId);
+        if (TextUtils.isEmpty(macAddress) || TextUtils.isEmpty(studentName) || TextUtils.isEmpty(studentNumber)) {
+            Faces.redirect("/backend/student-management?classId=" + classId + "#emptyError");
+        } else {
+            Map<Integer, Object> param = new HashMap<Integer, Object>();
 
-        SqlUtils.executeSqlUpdate(UPDATE_STUDENT_SQL, param);
+            param.put(1, selectedClassId);
+            param.put(2, studentNumber);
+            param.put(3, studentName);
+            param.put(4, macAddress);
+            param.put(5, studentId);
 
-        Faces.redirect("/backend/student-management?classId=" + classId + "#modified");
+            SqlUtils.executeSqlUpdate(UPDATE_STUDENT_SQL, param);
+
+            Faces.redirect("/backend/student-management?classId=" + classId + "#modified");
+        }
     }
-
 
     public String getClassId() {
         return classId;
