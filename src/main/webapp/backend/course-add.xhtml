@@ -133,7 +133,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js" />
-    <h:outputScript>
+    <h:outputScript>//<![CDATA[
         $(document).ready(function(){
             $("td label").addClass("checkbox-inline");
             $(".form-group td").each(function (e) {
@@ -142,9 +142,6 @@
             });
             $("#selectClassesDiv table").remove();
         });
-    </h:outputScript>
-    <script>
-
-    </script>
+    //]]></h:outputScript>
 </h:body>
 </html>

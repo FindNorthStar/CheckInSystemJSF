@@ -123,7 +123,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
-    <h:outputScript>
+    <h:outputScript>//<![CDATA[
         $(document).ready(function () {
             $('.input-daterange').datepicker({
                 maxViewMode: 2,
@@ -140,6 +140,6 @@
                 console.log($('#startDate').text() + $('#endDate').text() + $('#courseIdSelection').text());
             });
         });
-    </h:outputScript>
+    //]]></h:outputScript>
 </h:body>
 </html>

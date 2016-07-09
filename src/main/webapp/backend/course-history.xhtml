@@ -150,7 +150,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
-    <h:outputScript>
+    <h:outputScript>//<![CDATA[
         $('.input-daterange').datepicker({
             maxViewMode: 2,
             todayBtn: "linked",
@@ -168,6 +168,6 @@
                 $("#by-event").show();
             }
         });
-    </h:outputScript>
+    //]]></h:outputScript>
 </h:body>
 </html>

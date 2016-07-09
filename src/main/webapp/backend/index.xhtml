@@ -141,7 +141,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
-    <h:outputScript>
+    <h:outputScript>//<![CDATA[
         var disabled = #{backend_index.disabled};
         var currentCourseId = #{backend_index.selectedCourseId} +0;
         var currentTypeId = #{backend_index.selectedTypeId};
@@ -189,6 +189,6 @@
 
             $(".course_select").on('change', change_class);
         });
-    </h:outputScript>
+    //]]></h:outputScript>
 </h:body>
 </html>
