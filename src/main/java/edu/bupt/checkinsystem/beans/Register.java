@@ -2,6 +2,7 @@ package edu.bupt.checkinsystem.beans;
 
 import edu.bupt.checkinsystem.util.NetUtils;
 import edu.bupt.checkinsystem.util.SqlUtils;
+import edu.bupt.checkinsystem.util.TextUtils;
 import org.intellij.lang.annotations.Language;
 import org.omnifaces.util.Faces;
 
@@ -24,7 +25,7 @@ public class Register implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            if (NetUtils.getMacAddress() == null) {
+            if (NetUtils.getMacAddress() == null) { // 非 DHCP
                 Faces.redirect("ban");
             }
 
@@ -62,17 +63,53 @@ public class Register implements Serializable {
         this.studentName = studentName;
     }
 
+
+    @Language("MySQL")
+    private static final String LIST_MAC_ADDRESS_BY_STUDENT_NUMBER_AND_STUDENT_NAME_SQL =
+            "SELECT macAddress FROM student WHERE studentNo = ? AND studentName = ?";
+
+    private List<Map<String, Object>> macAddressQueryResult = null;
+
+    private List<Map<String, Object>> getMacAddressQueryResult() throws Exception {
+        if (macAddressQueryResult == null) {
+            Map<Integer, Object> param = new HashMap<Integer, Object>();
+            param.put(1, studentNo);
+            param.put(2, studentName);
+            macAddressQueryResult = SqlUtils.executeSqlQuery(LIST_MAC_ADDRESS_BY_STUDENT_NUMBER_AND_STUDENT_NAME_SQL, param);
+        }
+
+        return macAddressQueryResult;
+    }
+
+    private boolean hasStudentInDb() throws Exception {
+        return !macAddressQueryResult.isEmpty();
+    }
+
+    private boolean isMacAddressExist() {
+        Object object = macAddressQueryResult.get(0).get("macAddress");
+
+        return object != null && !TextUtils.isEmpty(String.valueOf(object));
+    }
+
+
     @Language("MySQL")
     private static final String UPDATE_STUDENT_TO_REGISTER = "UPDATE student SET macAddress = ? WHERE studentNo = ?";
 
     public void submit() throws Exception {
         // UPDATE student to map macAddress
+        getMacAddressQueryResult();
 
-        Map<Integer, Object> map = new HashMap<Integer, Object>();
-        map.put(1, NetUtils.getMacAddress());
-        map.put(2, getStudentNo());
+        if (!hasStudentInDb()) {
+            Faces.redirect("ban");
+        } else if (isMacAddressExist()) {
+            Faces.redirect("ban");
+        } else {
+            Map<Integer, Object> map = new HashMap<Integer, Object>();
+            map.put(1, NetUtils.getMacAddress());
+            map.put(2, getStudentNo());
 
-        SqlUtils.executeSqlUpdate(UPDATE_STUDENT_TO_REGISTER, map);
-        Faces.redirect("checkin");
+            SqlUtils.executeSqlUpdate(UPDATE_STUDENT_TO_REGISTER, map);
+            Faces.redirect("checkin");
+        }
     }
 }
