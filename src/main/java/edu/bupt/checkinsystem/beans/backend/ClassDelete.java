@@ -33,6 +33,6 @@ public class ClassDelete implements Serializable {
         Map<Integer, Object> param = new HashMap<Integer, Object>();
         param.put(1, Integer.valueOf(classId));
         SqlUtils.executeSqlUpdate(DELETE_CLASS_SQL, param);
-        Faces.redirect(Faces.getRequest().getHeader("Referer"));
+        Faces.redirect("/backend/classes");
     }
 }

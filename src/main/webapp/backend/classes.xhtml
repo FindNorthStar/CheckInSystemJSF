@@ -76,6 +76,7 @@
     </div>
     <div class="container">
         <div class="container-head">
+            <div id="empty-for-status"/>
             <div class="table-responsive">
                 <table class="table table-hover" id="classTable">
                     <thead>
@@ -100,6 +101,10 @@
                                 </span>
 
                                 <span class="operation">
+                                <a href='/backend/class-modification?classId=#{class.get("id")}'>修改</a>
+                                </span>
+
+                                <span class="operation">
                                 <a href='/backend/class-delete?classId=#{class.get("id")}'>删除</a>
                                 </span>
                             </td>
@@ -120,5 +125,17 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
+    <h:outputScript>//<![CDATA[
+        $(document).ready(function() {
+            var referer = document.referrer;
+            if (referer.indexOf("class-add") > -1) {
+                $('<div class="alert alert-success" role="alert">班级已添加。</div>').insertAfter("#empty-for-status");
+            } else if (referer.indexOf("class-modification") > -1) {
+                $('<div class="alert alert-success" role="alert">班级信息已更改。</div>').insertAfter("#empty-for-status");
+            } else if (referer.indexOf("class-delete") > -1) {
+                $('<div class="alert alert-success" role="alert">班级已删除</div>').insertAfter("#empty-for-status");
+            }
+        });
+    //]]></h:outputScript>
 </h:body>
 </html>
