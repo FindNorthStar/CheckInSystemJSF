@@ -74,9 +74,9 @@
                 <span>时间</span>
                 <div class="form-group">
                     <div class="input-daterange input-group date-picker-height" id="datepicker">
-                        <input type="text" class="input-sm form-control date-picker-height date-picker-font-16" name="start" />
+                        <input type="text" class="input-sm form-control date-picker-height date-picker-font-16" id="date-start" name="start" />
                         <span class="input-group-addon">到</span>
-                        <input type="text" class="input-sm form-control date-picker-height date-picker-font-16" name="end" />
+                        <input type="text" class="input-sm form-control date-picker-height date-picker-font-16" id="date-end" name="end" />
                     </div>
                 </div>
             </div>
@@ -126,6 +126,7 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js" />
     <h:outputScript library="js" name="jquery-cookie.js" />
     <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript library="js" name="jquery-urlparam.js" />
     <h:outputScript>//<![CDATA[
         $(document).ready(function () {
             $('.input-daterange').datepicker({
@@ -142,6 +143,9 @@
             $(".query-button").on('click', function() {
                 console.log($('#startDate').text() + $('#endDate').text() + $('#courseIdSelection').text());
             });
+
+            $("#date-start").val($.urlParam("start"));
+            $("#date-end").val($.urlParam("end"));
         });
     //]]></h:outputScript>
 </h:body>
