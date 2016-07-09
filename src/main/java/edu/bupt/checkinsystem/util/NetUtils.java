@@ -27,6 +27,11 @@ public class NetUtils {
         return getRequest().getHeader("Host");
     }
 
+    public static boolean isLocalHost() {
+        String host = getHost(); // use java.net.InetAddress to do it.
+        return true;
+    }
+
     public static Map<String, String> getMacIpList() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("10.125.103.169", "AAAAAAAAAAAA");

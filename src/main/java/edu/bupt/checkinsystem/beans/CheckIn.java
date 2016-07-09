@@ -29,7 +29,10 @@ public class CheckIn implements Serializable {
             }
 
             if (Globals.currentEventId == null) {
-                Faces.redirect("ban");
+                Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                        "当前不是签到时间, 请联系管理员或按以下按钮重试",
+                        "重试",
+                        "checkin");
             }
 
             if (!isRegistered(getStudentId())) {

@@ -30,7 +30,10 @@ public class Register implements Serializable {
             }
 
             if (isRegistered(NetUtils.getMacAddress())) {
-                Faces.redirect("checkin");
+                Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                        "您已经注册过了,现在请按以下按钮签到",
+                        "签到",
+                        "checkin");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,16 +103,25 @@ public class Register implements Serializable {
         getMacAddressQueryResult();
 
         if (!hasStudentInDb()) {
-            Faces.redirect("ban");
+            Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                    "学号或姓名不正确",
+                    "返回",
+                    "register");
         } else if (isMacAddressExist()) {
-            Faces.redirect("ban");
+            Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                    "您已经在其他设备注册过了",
+                    "返回",
+                    "register");
         } else {
             Map<Integer, Object> map = new HashMap<Integer, Object>();
             map.put(1, NetUtils.getMacAddress());
             map.put(2, getStudentNo());
 
             SqlUtils.executeSqlUpdate(UPDATE_STUDENT_TO_REGISTER, map);
-            Faces.redirect("checkin");
+            Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                    "注册成功, 您现在可以签到了",
+                    "签到",
+                    "checkin");
         }
     }
 }
