@@ -24,11 +24,11 @@
             margin-top: 8%;
         }
 
-        .class-birfe {
+        .class-brief {
             font-size: 16px;
         }
 
-        .brife-margin {
+        .brief-margin {
             margin-top: 20px;
             margin-bottom: 30px;
         }
@@ -82,8 +82,8 @@
         <div class="top">
             <h2>#{backend_student_management.classNo} 学生管理</h2>
 
-            <div class="brife-margin">
-                <p class="class-birfe">
+            <div class="brief-margin">
+                <p class="class-brief">
                     本班共<span class="student-count">#{backend_student_management.studentCount}</span>人。<span class="course">课程:
                     <ui:repeat var="course" value="#{backend_student_management.courseList}" >
                     <span class="course">
@@ -143,5 +143,17 @@
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
     <h:outputScript library="js" name="authenication.js"/>
+    <h:outputScript>//<![CDATA[
+        $(document).ready(function() {
+            var referer = document.referrer;
+            if (referer.indexOf("student-add") > -1) {
+                $('<div class="alert alert-success" role="alert">学生已添加。</div>').insertAfter(".brief-margin");
+            } else if (referer.indexOf("student-modification") > -1) {
+                $('<div class="alert alert-success" role="alert">学生信息已更改。</div>').insertAfter(".brief-margin");
+            } else if (referer.indexOf("student-delete") > -1) {
+                $('<div class="alert alert-success" role="alert">学生已删除</div>').insertAfter(".brief-margin");
+            }
+        });
+    //]]></h:outputScript>
 </h:body>
 </html>
