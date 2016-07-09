@@ -25,7 +25,12 @@
         }
 
         .table-top {
-            margin-top: 20px;
+            margin-top: 10px;
+        }
+
+        .add-btn {
+            margin-left: 2% !important;
+            margin-bottom: 12px !important;
         }
     </style>
 </h:head>
@@ -52,7 +57,7 @@
                     <li><a href="/backend/history">历史</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>当前用户: <span id="teacherName" /></a></li>
+                    <li><a>当前用户: <span id="teacherName"/></a></li>
                     <li><a href="/backend/logout">退出登录</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -63,7 +68,10 @@
 
         <div class="starter-template">
 
-            <h1>课程列表</h1>
+            <h2 style="display: inline">课程列表</h2>
+            <a href="course-add" class="add-btn btn btn-default">
+                增加
+            </a>
 
             <div class="table-top">
 
@@ -71,11 +79,6 @@
 
                     <thead>
                     <tr>
-                        <th>
-                            <a href="course-add">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </th>
                         <th>名称</th>
                         <th>班级</th>
                         <th>授课教师</th>
@@ -85,23 +88,22 @@
 
                     <tbody>
                     <ui:repeat var="record" value="#{backend_courses.records}">
-                    <tr>
-                        <th scope="row">#{record.get("id")}</th>
-                        <td>#{record.get("courseName")}</td>
-                        <td>#{record.get("classNumbers")}</td>
-                        <td>#{record.get("teachers")}</td>
-                        <td>
-                            <a href="course-modification?courseId=#{record.get('id')}">
-                                修改
-                            </a>
-                            <a href="course-delete?courseId=#{record.get('id')}">
-                                删除
-                            </a>
-                            <a href="course-history?courseId=#{record.get('id')}">
-                                签到记录
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>#{record.get("courseName")}</td>
+                            <td>#{record.get("classNumbers")}</td>
+                            <td>#{record.get("teachers")}</td>
+                            <td>
+                                <a href="course-modification?courseId=#{record.get('id')}">
+                                    修改
+                                </a>
+                                <a href="course-delete?courseId=#{record.get('id')}">
+                                    删除
+                                </a>
+                                <a href="course-history?courseId=#{record.get('id')}">
+                                    签到记录
+                                </a>
+                            </td>
+                        </tr>
                     </ui:repeat>
                     </tbody>
                 </table>
@@ -114,7 +116,7 @@
     <h:outputScript library="js" name="speed-up.js"/>
     <h:outputScript library="js" name="bootstrap.js"/>
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
-    <h:outputScript library="js" name="jquery-cookie.js" />
-    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript library="js" name="jquery-cookie.js"/>
+    <h:outputScript library="js" name="authenication.js"/>
 </h:body>
 </html>
