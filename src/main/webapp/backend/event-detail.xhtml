@@ -57,25 +57,23 @@
 
     <div class="container">
         <div class="page-header">
-            <h2>计算机组织与结构 在 07-07 08:00 的签到记录</h2>
+            <h2>#{backend_event_detail.courseName} 在 #{backend_event_detail.startDateTime} (#{backend_event_detail.typeName}) 的签到记录</h2>
         </div>
 
         <div class="alert alert-info statistical-one-line" role="alert">
             <span class="col-sm-offset-0">
             <span>上课班级:</span>
-                <span class="statistical-ml">2014211501</span>
-                <span class="statistical-ml">2014211501</span>
-                <span class="statistical-ml">2014211501</span>
-                <span class="statistical-ml">2014211501</span>
-                <span class="statistical-ml">2014211501</span>
+                <ui:repeat var="clazz" value="#{backend_event_detail.classList}" >
+                <span class="statistical-ml">#{clazz.get("classNo")}</span>
+                </ui:repeat>
             </span>
 
             <span class="col-sm-offset-1">
-                <span>总应签到人数:</span><span class="statistical-ml">1111</span>
+                <span>总应签到人数:</span><span class="statistical-ml">#{backend_event_detail.totalStudentCount}</span>
             </span>
 
             <span class="col-sm-offset-1">
-                <span>签到人数:</span><span class="statistical-ml">1110</span>
+                <span>签到人数:</span><span class="statistical-ml">#{backend_event_detail.checkInCount}</span>
             </span>
         </div>
 
@@ -88,86 +86,17 @@
                     <th>签到状态</th>
                     <th>操作</th>
                 </tr>
+                <ui:repeat var="student" value="#{backend_event_detail.studentList}" >
                 <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status">已签到</td>
+                    <td>#{student.get("studentNo")}</td>
+                    <td>#{student.get("studentName")}</td>
+                    <td class="event-status">#{student.get("checkDateTime")}</td>
                     <td class="event-operations">
                         <a href="#">补签</a>
                         <a href="#">申诉</a>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status">已签到</td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status"></td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status">已签到</td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status"></td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status">已签到</td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status"></td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2333333</td>
-                    <td>非常富有的兼非常欠啊的明哲</td>
-                    <td class="event-status"></td>
-                    <td class="event-operations">
-                        <a href="#">补签</a>
-                        <a href="#">申诉</a>
-                    </td>
-                </tr>
+                </ui:repeat>
 
             </table>
         </div>
