@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 >
 
 <h:head>
@@ -95,10 +95,17 @@
                 <h1><span id="titleClassName"/>学生信息导入</h1>
                 <h:form class="form-horizontal" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Excel 文件</label>
-                        <div class="col-sm-9">
-                            <h:inputFile value="#{backend_student_import.excelFile}" accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"/>
-                            <p class="help-block">支持 .xls 和 .xlsx 文件</p>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Excel 文件</label>
+                            <div class="col-sm-9">
+                                <h:inputFile value="#{backend_student_import.excelFile}"
+                                             p:accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <p class="help-block" style="text-align: left; margin-left: 14px;">支持 .xls 和 .xlsx 文件</p>
+                            </div>
                         </div>
                     </div>
 
