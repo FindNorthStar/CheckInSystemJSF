@@ -4,6 +4,7 @@
 
 var prefixZero = function(s) {
     if (s.length === 1) return "0" + s;
+    return s;
 };
 
 $.getTodayString = function() {
