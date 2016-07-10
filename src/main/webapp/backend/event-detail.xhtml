@@ -92,13 +92,31 @@
                     <td>#{student.get("studentName")}</td>
                     <td class="event-status">#{student.get("checkDateTime")}</td>
                     <td class="event-operations">
-                        <a href='/backend/buqian?studentId=#{student.get("id")}&amp;eventId=#{backend_event_detail.eventId}'>补签</a>
+                        <a class="operation-buqian" href='/backend/buqian?studentId=#{student.get("id")}&amp;eventId=#{backend_event_detail.eventId}'>补签</a>
                         <a href="#">申诉</a>
                     </td>
                 </tr>
                 </ui:repeat>
 
             </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModaLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    您确认要补签吗? 该动作不可撤销。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmBuqianButton">补签</button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Script here -->
@@ -117,6 +135,16 @@
 
             $(".query-button").on('click', function () {
                 console.log($('#startDate').text() + $('#endDate').text() + $('#courseIdSelection').text());
+            });
+
+            var redirectUriAfterConfirm = null;
+            $(".operation-buqian").on('click', function(e) {
+                e.preventDefault();
+                redirectUriAfterConfirm = $(this).attr('href');
+                $("#confirmOperationModal").modal();
+            });
+            $("#confirmBuqianButton").click(function() {
+                window.location = redirectUriAfterConfirm;
             });
         });
     //]]></h:outputScript>

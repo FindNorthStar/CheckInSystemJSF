@@ -110,7 +110,7 @@
                     <td>#{event.get("typeName")}</td>
                     <td class="event-status">#{event.get("checkInTime")}</td>
                     <td class="event-operations">
-                        <a href='/backend/buqian?studentId=#{backend_student_history.studentId}&amp;eventId=#{event.get("eventId")}'>补签</a>
+                        <a class="operation-buqian" href='/backend/buqian?studentId=#{backend_student_history.studentId}&amp;eventId=#{event.get("eventId")}'>补签</a>
                         <a href="#">申诉</a>
                     </td>
                 </tr>
@@ -118,6 +118,24 @@
 
         </table>
     </div>
+    </div>
+
+    <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModaLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    您确认要补签吗? 该动作不可撤销。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmBuqianButton">补签</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Script here -->
     <h:outputScript library="js" name="speed-up.js"/>
@@ -149,6 +167,16 @@
             var endDate = $.urlParam("end") || $.getTodayString();
             $("#date-start").val(startDate);
             $("#date-end").val(endDate);
+
+            var redirectUriAfterConfirm = null;
+            $(".operation-buqian").on('click', function(e) {
+                e.preventDefault();
+                redirectUriAfterConfirm = $(this).attr('href');
+                $("#confirmOperationModal").modal();
+            });
+            $("#confirmBuqianButton").click(function() {
+                window.location = redirectUriAfterConfirm;
+            });
         });
     //]]></h:outputScript>
 </h:body>

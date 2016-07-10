@@ -97,7 +97,7 @@
                                 <a href="course-modification?courseId=#{record.get('id')}">
                                     修改
                                 </a>
-                                <a href="course-delete?courseId=#{record.get('id')}">
+                                <a class="operation-delete" href="course-delete?courseId=#{record.get('id')}">
                                     删除
                                 </a>
                                 <a href="course-history?courseId=#{record.get('id')}">
@@ -112,6 +112,24 @@
         </div>
 
     </div><!-- /.container -->
+
+    <div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModaLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    您确认要删除这个课程吗? 该课程的所有事件及签到记录将被一并删除。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Script here -->
     <h:outputScript library="js" name="speed-up.js"/>
@@ -131,6 +149,16 @@
             } else if (hash === "#emptyError") {
                 $('<div class="alert alert-danger" role="alert">课程信息不能有空项</div>').insertAfter("#empty-for-status");
             }
+
+            var redirectUriAfterConfirm = null;
+            $(".operation-delete").on('click', function(e) {
+                e.preventDefault();
+                redirectUriAfterConfirm = $(this).attr('href');
+                $("#confirmOperationModal").modal();
+            });
+            $("#confirmDeleteButton").click(function() {
+                window.location = redirectUriAfterConfirm;
+            });
         });
     //]]></h:outputScript>
 </h:body>
