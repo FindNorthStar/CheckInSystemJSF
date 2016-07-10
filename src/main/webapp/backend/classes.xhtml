@@ -134,6 +134,8 @@
                 $('<div class="alert alert-success" role="alert">班级信息已更改。</div>').insertAfter("#empty-for-status");
             } else if (hash === "#deleted") {
                 $('<div class="alert alert-success" role="alert">班级已删除</div>').insertAfter("#empty-for-status");
+            } else if (hash === "#emptyError") {
+                $('<div class="alert alert-danger" role="alert">班级序号不能为空</div>').insertAfter("#empty-for-status");
             }
         });
     //]]></h:outputScript>
