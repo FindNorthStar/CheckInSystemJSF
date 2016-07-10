@@ -130,9 +130,7 @@
     <h:outputScript library="js" name="authenication.js"/>
     <h:outputScript>//<![CDATA[
         $(document).ready(function() {
-            $(document).ready(function() {
-                $("form[enctype='multipart/form-data']").attr("action","#{request.contextPath}/faces/backend/student-import.xhtml");
-            });
+            $("form[enctype='multipart/form-data']").attr("action","#{request.contextPath}/faces/backend/student-import.xhtml");
         });
     //]]></h:outputScript>
 </h:body>
