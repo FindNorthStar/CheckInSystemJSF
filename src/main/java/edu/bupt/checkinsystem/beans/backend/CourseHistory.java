@@ -151,7 +151,7 @@ public class CourseHistory implements Serializable {
     }
 
     @Language("MySQL")
-    private static final String LIST_EVENT_SQL = "SELECT event.id, DATE(event.startDateTime) AS startDateTime, type.name AS typeName,\n" +
+    private static final String LIST_EVENT_SQL = "SELECT event.id, DATE_FORMAT(event.startDateTime, \"%m-%d %H:%i\") AS startDateTime, type.name AS typeName,\n" +
             "\t(SELECT COUNT(*) FROM record WHERE record.eventId = event.id) AS checkInCount\n" +
             "FROM event, type\n" +
             "WHERE courseId = ?\n" +
