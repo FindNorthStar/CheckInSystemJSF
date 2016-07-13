@@ -8,6 +8,7 @@ import org.omnifaces.util.Faces;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

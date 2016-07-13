@@ -30,7 +30,7 @@ public class TeacherAdd {
 
     public void submit() throws Exception {
 
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(teacherName)) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(teacherName) || TextUtils.isEmpty(password)) {
             Faces.redirect("/backend/teachers#emptyError");
         } else {
             Map<Integer, Object> param = new HashMap<Integer, Object>();
