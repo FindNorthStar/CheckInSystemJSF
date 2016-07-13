@@ -173,6 +173,8 @@
             var endDate = $.urlParam("end") || $.getTodayString();
             $("#date-start").val(startDate);
             $("#date-end").val(endDate);
+            var courseId = $.urlParam('courseId') || 0;
+            $("select").val(courseId);
 
             var redirectUriAfterConfirm = null;
             $(".operation-buqian").on('click', function(e) {
