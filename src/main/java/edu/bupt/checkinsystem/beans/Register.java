@@ -27,6 +27,7 @@ public class Register implements Serializable {
         try {
             if (NetUtils.getMacAddress() == null) { // 非 DHCP
                 Faces.redirect("ban");
+                return;
             }
 
             if (isRegistered(NetUtils.getMacAddress())) {
@@ -34,6 +35,7 @@ public class Register implements Serializable {
                         "您已经注册过了,现在请按以下按钮签到",
                         "签到",
                         "checkin");
+                return;
             }
         } catch (Exception e) {
             e.printStackTrace();

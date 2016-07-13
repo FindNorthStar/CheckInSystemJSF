@@ -9,6 +9,7 @@ import org.omnifaces.util.Faces;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.convert.IntegerConverter;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +34,22 @@ public class CheckIn implements Serializable {
                         "当前不是签到时间,<br>请联系管理员或按以下按钮重试",
                         "重试",
                         "checkin");
+                return;
             }
 
             if (!isRegistered(getStudentId())) {
                 // Student not registered.
                 Faces.redirect("register");
+                return;
+            }
+
+            if (!isAllowedToCheckInNow()) {
+                // Student registered, but his class is not allowed to attend the course
+                Faces.redirect("redirect?message=%s&buttonText=%s&uri=%s",
+                        "当前不是签到时间,<br>请联系管理员或按以下按钮重试",
+                        "重试",
+                        "checkin");
+                return;
             }
 
             // Student already registered.
@@ -51,6 +63,25 @@ public class CheckIn implements Serializable {
         }
     }
 
+    @Language("MySQL")
+    private static final String GET_CLASS_EXISTS_SQL = "SELECT DISTINCT class.id AS classId\n" +
+            "FROM class\n" +
+            "WHERE class.id IN (\n" +
+            "\tSELECT student.classId \n" +
+            "\tFROM student \n" +
+            "\tWHERE id = ?)\n" +
+            "AND class.id IN (\n" +
+            "\tSELECT courseClass.classId \n" +
+            "\tFROM courseClass, event\n" +
+            "\tWHERE courseClass.courseId = event.courseId\n" +
+            "    AND event.id = ?)";
+    private boolean isAllowedToCheckInNow() throws Exception {
+        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        map.put(1, getStudentId());
+        map.put(2, Globals.currentEventId);
+        List<Map<String, Object>> result = SqlUtils.executeSqlQuery(GET_CLASS_EXISTS_SQL, map);
+        return !result.isEmpty();
+    }
 
     private boolean isRegistered(Integer studentId) throws Exception {
         return studentId != null;
