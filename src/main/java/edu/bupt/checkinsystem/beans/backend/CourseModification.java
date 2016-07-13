@@ -31,6 +31,7 @@ public class CourseModification implements Serializable {
     @PostConstruct
     private void init() {
         try {
+            getClasses();
             courseId = Faces.getRequestParameter("courseId");
             Map<Integer, Object> param = new HashMap<Integer, Object>();
             param.put(1, Integer.valueOf(courseId));
