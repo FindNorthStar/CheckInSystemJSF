@@ -127,10 +127,10 @@
                         <a href='/backend/student-history?studentId=#{student.get("id")}'>
                             签到记录
                         </a>
-                        <a class="operation-delete" href='/backend/student-modification?studentId=#{student.get("id")}&amp;classId=#{backend_student_management.classId}'>
+                        <a href='/backend/student-modification?studentId=#{student.get("id")}&amp;classId=#{backend_student_management.classId}'>
                             修改
                         </a>
-                        <a href="/backend/student-delete?studentId=#{student.get('id')}&amp;classId=#{backend_student_management.classId}">
+                        <a class="operation-delete" href="/backend/student-delete?studentId=#{student.get('id')}&amp;classId=#{backend_student_management.classId}">
                             删除
                         </a>
                     </td>
