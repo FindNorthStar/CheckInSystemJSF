@@ -91,7 +91,7 @@
                     本班共<span class="student-count">#{backend_student_management.studentCount}</span>人。<span class="course">课程:
                     <ui:repeat var="course" value="#{backend_student_management.courseList}" >
                     <span class="course">
-                        <a href="#">#{course.get('courseName')}</a>
+                        <span>#{course.get('courseName')}</span>
                     </span>
                     </ui:repeat>
                 </span>
