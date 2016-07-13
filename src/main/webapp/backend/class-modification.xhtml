@@ -59,6 +59,10 @@
                     <li><a href="/backend/teachers">教师</a></li>
                     <li><a>历史</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>当前用户: <span id="teacherName"/></a></li>
+                    <li><a href="/backend/logout">退出登录</a></li>
+                </ul>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
@@ -70,7 +74,7 @@
                 <h:form class="top form-inline">
                     <div class="form-group">
                         <label class="class-number-label">班级序号</label>
-                        <h:inputHidden value="#{backend_class_modification.classId}" />
+                        <h:inputHidden value="#{backend_class_modification.classId}"/>
                         <h:inputText styleClass="form-control" value="#{backend_class_modification.classNo}"/>
                     </div>
                     <h:commandButton styleClass="submit-btn-ml btn btn-default" value="提交"

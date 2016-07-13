@@ -82,6 +82,10 @@
                     <li><a href="/backend/teachers">教师</a></li>
                     <li><a>历史</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>当前用户: <span id="teacherName"/></a></li>
+                    <li><a href="/backend/logout">退出登录</a></li>
+                </ul>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
@@ -92,7 +96,7 @@
 
             <center>
 
-                <h1><span id="titleClassName" />课程信息修改</h1>
+                <h1><span id="titleClassName"/>课程信息修改</h1>
                 <h:form class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">课程名称</label>
@@ -104,8 +108,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">上课班级</label>
                         <div class="col-sm-9" id="selectClassesDiv">
-                            <h:selectManyCheckbox value="#{backend_course_modification.selectedClasses}" >
-                                <f:selectItems value="#{backend_course_modification.classes}" styleClass="checkbox-inline" />
+                            <h:selectManyCheckbox value="#{backend_course_modification.selectedClasses}">
+                                <f:selectItems value="#{backend_course_modification.classes}"
+                                               styleClass="checkbox-inline"/>
                             </h:selectManyCheckbox>
                         </div>
                     </div>
@@ -118,7 +123,8 @@
                     </div>
                     <div class="form-group">
                         <div class="submit-btn-ml col-sm-7">
-                            <h:commandButton styleClass="btn btn-default" value="提交" action="#{backend_course_modification.submit}"/>
+                            <h:commandButton styleClass="btn btn-default" value="提交"
+                                             action="#{backend_course_modification.submit}"/>
                         </div>
                     </div>
                 </h:form>
@@ -133,9 +139,9 @@
     <h:outputScript library="js" name="bootstrap.js"/>
     <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"/>
     <h:outputScript library="js" name="jquery-cookie.js"/>
-    <h:outputScript library="js" name="authenication.js" />
+    <h:outputScript library="js" name="authenication.js"/>
     <h:outputScript>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("td label").addClass("checkbox-inline");
             $(".form-group td").each(function (e) {
                 $(this).find('input').detach().prependTo($(this).find('label'));
