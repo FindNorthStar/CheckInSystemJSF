@@ -25,7 +25,19 @@ public class Classes implements Serializable {
         return classes;
     }
 
-    public void redirectToClassAdd() throws IOException {
-        Faces.redirect("/backend/class-add");
+    public void redirectToClassAdd() {
+        try {
+            Faces.redirect("/backend/class-add");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void redirectToStudentImport() {
+        try {
+            Faces.redirect("/backend/student-import");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

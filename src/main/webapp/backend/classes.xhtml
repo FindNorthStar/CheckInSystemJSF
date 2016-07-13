@@ -69,7 +69,7 @@
             <h:form styleClass="form-horizontal">
                 <div class="btn-group" role="group" aria-label="...">
                     <h:commandButton actionListener="#{backend_classes.redirectToClassAdd}" styleClass="btn btn-default" value="增加"/>
-                    <h:commandButton styleClass="btn btn-default" value="导入 Excel"/>
+                    <h:commandButton actionListener="#{backend_classes.redirectToStudentImport}" styleClass="btn btn-default" value="导入 Excel"/>
                 </div>
             </h:form>
         </div>
