@@ -71,10 +71,14 @@ public class StudentModification {
 
     public void submit() throws Exception {
 
-        if (TextUtils.isEmpty(macAddress) || TextUtils.isEmpty(studentName) || TextUtils.isEmpty(studentNumber)) {
+
+
+        if (TextUtils.isEmpty(studentName) || TextUtils.isEmpty(studentNumber)) {
             Faces.redirect("/backend/student-management?classId=" + classId + "#emptyError");
         } else {
             Map<Integer, Object> param = new HashMap<Integer, Object>();
+
+            // TODO: 16/7/13 Need to check irregular MacAddress and set it to sql null
 
             param.put(1, selectedClassId);
             param.put(2, studentNumber);
